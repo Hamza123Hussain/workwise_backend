@@ -1,6 +1,9 @@
 import mongoose from 'mongoose'
 
 const TimeSchema = new mongoose.Schema({
+  UserData: {
+    ref: 'User',
+  },
   entry: {
     // Changed to camelCase for consistency
     type: Date,
