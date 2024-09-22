@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 
 const TimeSchema = new mongoose.Schema({
   UserData: {
-    ref: 'User',
+    // ref: 'User',
+    type: String,
   },
   entry: {
     // Changed to camelCase for consistency
@@ -13,6 +14,7 @@ const TimeSchema = new mongoose.Schema({
     // Changed to camelCase for consistency
     type: Date,
     required: true, // Make it required if you want to ensure exit time is always stored
+    default: Date.now,
   },
   currentDate: {
     // Changed to camelCase for consistency
