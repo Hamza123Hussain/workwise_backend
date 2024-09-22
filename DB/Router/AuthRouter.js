@@ -8,7 +8,7 @@ import { ResetPass } from '../Controller/Auth/ResetPass.js'
 const AuthRouter = Router()
 
 AuthRouter.post('/Signup', upload.single('Image'), RegisterUser)
-AuthRouter.get('/SignIn', Login)
+AuthRouter.post('/SignIn', Login)
 AuthRouter.get('/Signout', Signout)
 AuthRouter.post('/Reset', ResetPass)
 export default AuthRouter
