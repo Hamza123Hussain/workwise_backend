@@ -1,5 +1,5 @@
-import { TimeModel } from '../../Models/Time.js'
-import User from '../../Models/User.js'
+import { User } from '../../Models/User.js'
+import { AttendanceModel } from '../../Models/Attendance.js'
 
 export const NewAttendance = async (req, res) => {
   const { Email, EntryTime } = req.body
@@ -10,7 +10,7 @@ export const NewAttendance = async (req, res) => {
 
     if (ExistUser) {
       // Create a new attendance record
-      const NewAttendance = await TimeModel.create({
+      const NewAttendance = await AttendanceModel.create({
         UserData: ExistUser._id, // Store user ID instead of just email for better referencing
         Entry: EntryTime, // Assuming EntryTime is in the correct format
         IsAbsent: false, // Mark user as present
