@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import User from '../../Models/User.js'
+import { User } from '../../Models/User.js'
 import { auth, Storage } from '../../../FireBaseConfig.js'
 
 export const RegisterUser = async (req, res) => {
