@@ -5,7 +5,7 @@ import { auth, Storage } from '../../../FireBaseConfig.js'
 
 export const RegisterUser = async (req, res) => {
   const { Name, Email, password } = req.body
-  const image = req.file // The uploaded image file
+  const Image = req.file // The uploaded Image file
 
   try {
     // Check if user already exists
@@ -24,10 +24,10 @@ export const RegisterUser = async (req, res) => {
     if (userCredential.user.uid) {
       let ImageUrl = ''
 
-      // Upload image to Firebase Storage (if provided)
-      if (image) {
-        const storageRef = ref(Storage, `images/${image.originalname}`)
-        await uploadBytes(storageRef, image.buffer)
+      // Upload Image to Firebase Storage (if provided)
+      if (Image) {
+        const storageRef = ref(Storage, `Images/${Image.originalname}`)
+        await uploadBytes(storageRef, Image.buffer)
         ImageUrl = await getDownloadURL(storageRef)
       }
 
@@ -36,9 +36,9 @@ export const RegisterUser = async (req, res) => {
         _id: userCredential.user.uid,
         Name,
         Email,
-        imageUrl: ImageUrl
+        ImageUrl: ImageUrl
           ? ImageUrl
-          : 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png', // Store the image URL if uploaded
+          : 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png', // Store the Image URL if uploaded
       })
 
       // Save user data to MongoDB
