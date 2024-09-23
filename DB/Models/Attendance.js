@@ -1,6 +1,9 @@
 import mongoose from 'mongoose'
 
 const AttendanceSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+  },
   UserData: {
     // ref: 'User',
     type: String,
