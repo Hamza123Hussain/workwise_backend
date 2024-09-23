@@ -1,6 +1,9 @@
 import mongoose from 'mongoose'
 
 const TaskSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+  },
   name: {
     // Changed to camelCase for consistency
     type: String,
