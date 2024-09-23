@@ -1,9 +1,10 @@
 import { User } from '../../Models/User.js'
 import { AttendanceModel } from '../../Models/Attendance.js'
+import { v4 } from 'uuid'
 
 export const NewAttendance = async (req, res) => {
   const { Email, EntryTime } = req.body
-
+  const randomid = v4()
   try {
     // Check if the user exists by querying the User model with the email
     const ExistUser = await User.findOne({ Email })
@@ -11,6 +12,7 @@ export const NewAttendance = async (req, res) => {
     if (ExistUser) {
       // Create a new attendance record
       const NewAttendance = await AttendanceModel.create({
+        _id: randomid,
         UserData: ExistUser._id, // Store user ID instead of just email for better referencing
         entry: EntryTime, // Assuming EntryTime is in the correct format
         isAbsent: false, // Mark user as present
