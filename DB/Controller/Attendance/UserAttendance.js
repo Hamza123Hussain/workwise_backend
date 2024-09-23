@@ -9,7 +9,9 @@ export const UserAttendance = async (req, res) => {
 
     if (ExistUser) {
       // Fetch all attendance records for the given user's email
-      const allAttendance = await AttendanceModel.find({ UserData: Email }) // Assuming you store the email in "UserData"
+      const allAttendance = await AttendanceModel.find({
+        UserData: ExistUser._id,
+      }) // Assuming you store the email in "UserData"
 
       // If no records are found, return a 404 error
       if (!allAttendance || allAttendance.length === 0) {
