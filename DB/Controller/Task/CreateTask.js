@@ -1,9 +1,10 @@
+import { v4 } from 'uuid'
 import { TaskModel } from '../../Models/Task.js'
 import { User } from '../../Models/User.js'
 
 export const CreateTask = async (req, res) => {
   const { description, dueDate, assignedTo, name, Email } = req.body
-
+  const randomid = v4()
   try {
     // Check if the user exists using findOne instead of find
     const UserExist = await User.findOne({ Email })
@@ -11,6 +12,7 @@ export const CreateTask = async (req, res) => {
     if (UserExist) {
       // Create the task
       const TaskCreate = await TaskModel.create({
+        _id: randomid,
         name,
         assignedTo,
         dueDate,
