@@ -1,5 +1,5 @@
-import { TimeModel } from '../../Models/Time.js'
-import User from '../../Models/User.js'
+import { AttendanceModel } from '../../Models/Attendance.js'
+import { User } from '../../Models/User.js'
 
 export const AllUser = async (req, res) => {
   const { Email } = req.body
@@ -10,7 +10,7 @@ export const AllUser = async (req, res) => {
 
     if (ExistUser) {
       // Fetch all attendance records for the given user's email
-      const allAttendance = await TimeModel.find({ UserData: Email }) // Assuming you store the email in "UserData"
+      const allAttendance = await AttendanceModel.find() // Assuming you store the email in "UserData"
 
       // If no records are found, return a 404 error
       if (!allAttendance || allAttendance.length === 0) {
