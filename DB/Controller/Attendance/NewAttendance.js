@@ -12,9 +12,9 @@ export const NewAttendance = async (req, res) => {
       // Create a new attendance record
       const NewAttendance = await AttendanceModel.create({
         UserData: ExistUser._id, // Store user ID instead of just email for better referencing
-        Entry: EntryTime, // Assuming EntryTime is in the correct format
-        IsAbsent: false, // Mark user as present
-        CurrentDate: new Date(), // Store the current date
+        entry: EntryTime, // Assuming EntryTime is in the correct format
+        isAbsent: false, // Mark user as present
+        currentDate: new Date(), // Store the current date
       })
 
       // Respond with success message and the newly created attendance data
@@ -28,6 +28,6 @@ export const NewAttendance = async (req, res) => {
     }
   } catch (error) {
     // Catch any errors and return a 500 status code
-    return res.status(500).json({ message: error.message })
+    return res.status(500).json({ error })
   }
 }
