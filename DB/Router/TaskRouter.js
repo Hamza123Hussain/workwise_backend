@@ -8,7 +8,7 @@ import { DeleteTask } from '../Controller/Task/DeleteTask.js'
 const TaskRouter = Router()
 
 TaskRouter.post('/CreateNewTask', CreateTask)
-TaskRouter.post('/UpdateTask', TaskUpdated)
+TaskRouter.put('/UpdateTask', TaskUpdated)
 TaskRouter.get('/AllTasks', AllTasks)
 TaskRouter.get('/GetUserTasks', UserTasks)
 TaskRouter.delete('/DeleteTask', DeleteTask)
