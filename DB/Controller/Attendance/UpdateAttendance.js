@@ -13,7 +13,7 @@ export const UpdateAttendance = async (req, res) => {
       const UpdateAttendance = await AttendanceModel.findByIdAndUpdate(
         id,
         {
-          Exit: ExitTime, // Make sure "Exit" matches the schema field name
+          exit: ExitTime, // Make sure "Exit" matches the schema field name
         },
         { new: true } // This returns the updated document
       )
