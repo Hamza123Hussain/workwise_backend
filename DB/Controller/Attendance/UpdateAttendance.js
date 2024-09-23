@@ -1,5 +1,5 @@
-import { TimeModel } from '../../Models/Time.js'
-import User from '../../Models/User.js'
+import { AttendanceModel } from '../../Models/Attendance.js'
+import { User } from '../../Models/User.js'
 
 export const UpdateAttendance = async (req, res) => {
   const { Email, id, ExitTime } = req.body
@@ -10,7 +10,7 @@ export const UpdateAttendance = async (req, res) => {
 
     if (ExistUser) {
       // Update the attendance record by the provided id
-      const UpdateAttendance = await TimeModel.findByIdAndUpdate(
+      const UpdateAttendance = await AttendanceModel.findByIdAndUpdate(
         id,
         {
           Exit: ExitTime, // Make sure "Exit" matches the schema field name
