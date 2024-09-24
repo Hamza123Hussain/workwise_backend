@@ -2,7 +2,7 @@ import { TaskModel } from '../../Models/Task.js'
 import { User } from '../../Models/User.js'
 
 export const UserTasks = async (req, res) => {
-  const { Email } = req.body
+  const { Email } = req.query
   try {
     // Check if the user exists
     const UserExist = await User.findOne({ Email })
