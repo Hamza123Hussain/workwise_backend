@@ -6,7 +6,11 @@ import TaskRouter from './DB/Router/TaskRouter.js'
 import AttendanceRouter from './DB/Router/AttendanceRouter.js'
 const app = express()
 app.use(express.json())
-app.use(cors())
+const corsOptions = {
+  origin: '*', // Allow requests from any origin; adjust as needed for security
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow only GET and POST methods
+}
+app.use(cors(corsOptions))
 app.use('/Api/Auth', AuthRouter)
 app.use('/Api/Attendance', AttendanceRouter)
 app.use('/Api/Task', TaskRouter)
