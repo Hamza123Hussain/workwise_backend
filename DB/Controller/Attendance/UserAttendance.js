@@ -2,7 +2,7 @@ import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
 
 export const UserAttendance = async (req, res) => {
-  const { Email } = req.body
+  const { Email } = req.query
   try {
     // Check if the user exists by querying the User model with the email
     const ExistUser = await User.findOne({ Email })
