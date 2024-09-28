@@ -16,8 +16,6 @@ const AttendanceSchema = new mongoose.Schema({
   exit: {
     // Changed to camelCase for consistency
     type: Date,
-    required: true, // Make it required if you want to ensure exit Attendance is always stored
-    default: Date.now,
   },
   currentDate: {
     // Changed to camelCase for consistency
@@ -27,6 +25,10 @@ const AttendanceSchema = new mongoose.Schema({
   isAbsent: {
     type: Boolean,
     default: false,
+  },
+  Salary: {
+    type: Number,
+    required: true,
   },
 })
 
