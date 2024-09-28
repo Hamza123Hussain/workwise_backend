@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  Salary: {
+    type: Number,
+    required: true,
+  },
 })
 
 // Create and export the User model
