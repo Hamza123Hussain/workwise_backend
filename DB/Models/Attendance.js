@@ -26,10 +26,6 @@ const AttendanceSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  Salary: {
-    type: Number,
-    required: true,
-  },
 })
 
 // Create and export the Attendance model
