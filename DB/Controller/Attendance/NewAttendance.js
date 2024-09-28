@@ -13,9 +13,9 @@ export const NewAttendance = async (req, res) => {
       // Create a new attendance record
       const NewAttendance = await AttendanceModel.create({
         _id: randomid,
-        UserData: ExistUser._id, // Store user ID instead of just email for better referencing
+        UserData: ExistUser.Name, // Store user ID instead of just email for better referencing
         entry: EntryTime, // Assuming EntryTime is in the correct format
-        isAbsent: false, // Mark user as present
+        isAbsent: false, // Mark user as present,
         currentDate: new Date(), // Store the current date
       })
 
