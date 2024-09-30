@@ -15,6 +15,7 @@ export const NewAttendance = async (req, res) => {
         _id: randomid,
         User_ID: ExistUser.id,
         UserData: ExistUser.Name, // Store user ID instead of just email for better referencing
+        Email: ExistUser.Email,
         entry: EntryTime, // Assuming EntryTime is in the correct format
         isAbsent: false, // Mark user as present,
         currentDate: new Date(), // Store the current date

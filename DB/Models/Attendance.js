@@ -30,6 +30,10 @@ const AttendanceSchema = new mongoose.Schema({
     type: String,
     requried: true,
   },
+  Email: {
+    type: String,
+    required: true,
+  },
 })
 
 // Create and export the Attendance model
