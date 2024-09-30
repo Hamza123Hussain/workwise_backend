@@ -7,7 +7,9 @@ const storageBucket = process.env.FIREBASE_STORAGE_BUCKET
 const messagingSenderId = process.env.FIREBASE_MESSAGING_SENDER_ID
 const appId = process.env.FIREBASE_APP_ID
 const Mongo_url = process.env.Mongo_url
+const PORT = process.env.PORT
 export {
+  PORT,
   apiKey,
   authDomain,
   projectId,
