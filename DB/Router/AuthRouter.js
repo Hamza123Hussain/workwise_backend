@@ -13,4 +13,5 @@ AuthRouter.post('/SignIn', Login)
 AuthRouter.get('/Signout', Signout)
 AuthRouter.post('/Reset', ResetPass)
 AuthRouter.get('/GetUser', GetUser)
+AuthRouter.post('/UpdateUser', upload.single('Image'), RegisterUser)
 export default AuthRouter
