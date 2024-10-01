@@ -34,6 +34,10 @@ const AttendanceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  CheckInStatus: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 // Create and export the Attendance model
