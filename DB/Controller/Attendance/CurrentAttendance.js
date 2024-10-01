@@ -11,7 +11,7 @@ export const CurrentAttendance = async (req, res) => {
       // Fetch attendance records for the given user's email where checkInStatus is true
       const allAttendance = await AttendanceModel.find({
         Email: ExistUser.Email,
-        checkInStatus: true, // Add filter for checkInStatus
+        CheckInStatus: true, // Add filter for checkInStatus
       })
 
       // If no records are found, return a 404 error
