@@ -1,7 +1,7 @@
 import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
 
-export const UserAttendance = async (req, res) => {
+export const CurrentAttendance = async (req, res) => {
   const { Email } = req.query
   try {
     // Check if the user exists by querying the User model with the email
