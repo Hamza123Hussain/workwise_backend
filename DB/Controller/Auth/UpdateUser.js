@@ -3,7 +3,7 @@ import { User } from '../../Models/User.js'
 import { Storage } from '../../../FireBaseConfig.js'
 
 export const UpdateUser = async (req, res) => {
-  const { Name, Email, JobDescription } = req.body
+  const { Email, JobDescription } = req.body
   const Image = req.file // The uploaded image file
 
   try {
@@ -25,21 +25,17 @@ export const UpdateUser = async (req, res) => {
       const updatedUser = await User.findByIdAndUpdate(
         existingUser._id,
         {
-          Name,
           JobDescription,
-          imageUrl: ImageUrl,
         },
         { new: true } // Return the updated document
       )
 
       // If user data was updated successfully
       if (updatedUser) {
-        return res
-          .status(200)
-          .json({
-            message: 'User has been updated successfully',
-            user: updatedUser,
-          })
+        return res.status(200).json({
+          message: 'User has been updated successfully',
+          user: updatedUser,
+        })
       } else {
         return res.status(400).json({ message: 'User update failed' })
       }
