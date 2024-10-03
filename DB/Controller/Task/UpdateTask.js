@@ -1,7 +1,7 @@
 import { TaskModel } from '../../Models/Task.js'
 import { User } from '../../Models/User.js'
 export const TaskUpdated = async (req, res) => {
-  const { id, Email, progressupdate } = req.body
+  const { id, Email, progress, description, priority } = req.body
   try {
     const UserExist = await User.findOne({ Email })
     if (UserExist) {
@@ -12,7 +12,7 @@ export const TaskUpdated = async (req, res) => {
       // Update the task
       const TaskUpdated = await TaskModel.findByIdAndUpdate(
         id,
-        { progress: progressupdate },
+        { progress, description, priority },
         { new: true } // This returns the updated document
       )
       // Return the updated task
