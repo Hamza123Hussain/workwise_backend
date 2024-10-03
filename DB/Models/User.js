@@ -28,6 +28,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  JobTitle: {
+    type: String,
+    required: true,
+  },
 })
 
 // Create and export the User model

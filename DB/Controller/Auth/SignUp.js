@@ -4,7 +4,7 @@ import { User } from '../../Models/User.js'
 import { auth, Storage } from '../../../FireBaseConfig.js'
 
 export const RegisterUser = async (req, res) => {
-  const { Name, Email, password, Salary, JobDescription } = req.body
+  const { Name, Email, password, Salary, JobDescription, JobTitle } = req.body
   const Image = req.file // The uploaded Image file
 
   try {
@@ -35,12 +35,11 @@ export const RegisterUser = async (req, res) => {
       const userData = new User({
         _id: userCredential.user.uid,
         Name,
+        JobTitle,
         Email,
         Salary,
         JobDescription,
         imageUrl: ImageUrl
-          ? ImageUrl
-          : 'https://static.thenounproject.com/png/363640-200.png'
           ? ImageUrl
           : 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png', // Store the Image URL if uploaded
       })
