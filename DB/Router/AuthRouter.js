@@ -7,6 +7,7 @@ import { ResetPass } from '../Controller/Auth/ResetPass.js'
 import { GetUser } from '../Controller/Auth/GetUser.js'
 import { UpdateUser } from '../Controller/Auth/UpdateUser.js'
 import { AllUsers } from '../Controller/Auth/AllUsers.js'
+import { DeleteUser } from '../Controller/Auth/DeleteUser.js'
 
 const AuthRouter = Router()
 
@@ -17,4 +18,5 @@ AuthRouter.post('/Reset', ResetPass)
 AuthRouter.get('/GetUser', GetUser)
 AuthRouter.get('/AllUsers', AllUsers)
 AuthRouter.post('/UpdateUser', upload.single('Image'), UpdateUser)
+AuthRouter.delete('/DeleteUser', DeleteUser)
 export default AuthRouter
