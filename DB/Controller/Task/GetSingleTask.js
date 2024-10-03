@@ -1,7 +1,7 @@
 import { TaskModel } from '../../Models/Task.js'
 import { User } from '../../Models/User.js'
 
-export const GetTask = async (req, res) => {
+export const GetSingleTask = async (req, res) => {
   const { Email, taskId } = req.query // Assuming you pass both Email and taskId as query parameters
 
   try {

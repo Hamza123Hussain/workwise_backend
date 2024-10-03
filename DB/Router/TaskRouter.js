@@ -4,6 +4,7 @@ import { TaskUpdated } from '../Controller/Task/UpdateTask.js'
 import { AllTasks } from '../Controller/Task/AllTasks.js'
 import { UserTasks } from '../Controller/Task/UserTasks.js'
 import { DeleteTask } from '../Controller/Task/DeleteTask.js'
+import { GetSingleTask } from '../Controller/Task/GetSingleTask.js'
 
 const TaskRouter = Router()
 
@@ -12,5 +13,6 @@ TaskRouter.put('/UpdateTask', TaskUpdated)
 TaskRouter.get('/AllTasks', AllTasks)
 TaskRouter.get('/GetUserTasks', UserTasks)
 TaskRouter.delete('/DeleteTask', DeleteTask)
+TaskRouter.get('/singleTask', GetSingleTask)
 
 export default TaskRouter
