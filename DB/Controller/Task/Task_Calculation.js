@@ -1,5 +1,5 @@
 export function calculateTaskCompletion(progress, priority) {
-  if (progress === 'COMPLETED') {
+  if (progress === 'DONE') {
     return 100
   }
 
