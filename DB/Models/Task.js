@@ -39,7 +39,7 @@ const TaskSchema = new mongoose.Schema({
   },
   TaskCompletion: {
     // Optional description for the task
-    type: String,
+    type: Number,
     default: 0,
   },
 })
