@@ -37,6 +37,11 @@ const TaskSchema = new mongoose.Schema({
     // Optional description for the task
     type: String,
   },
+  TaskCompletion: {
+    // Optional description for the task
+    type: String,
+    default: 0,
+  },
 })
 
 // Create and export the Task model
