@@ -1,8 +1,8 @@
 import { TaskModel } from '../../Models/Task.js'
 import { User } from '../../Models/User.js'
+import { calculateTaskCompletion } from './Task_Calculation.js'
 export const TaskUpdated = async (req, res) => {
-  const { id, Email, progress, description, priority, TaskCompletion } =
-    req.body
+  const { id, Email, progress, description, priority } = req.body
   try {
     const UserExist = await User.findOne({ Email })
     if (UserExist) {
@@ -10,13 +10,24 @@ export const TaskUpdated = async (req, res) => {
       if (!TaskExist) {
         return res.status(404).json({ message: 'Task not found' })
       }
-      // Update the task
+
+      // Before updating the task, calculate TaskCompletion
+      const calculatedTaskCompletion = calculateTaskCompletion(
+        progress,
+        priority
+      )
+
+      // Update task with the new calculated TaskCompletion
       const TaskUpdated = await TaskModel.findByIdAndUpdate(
         id,
-        { progress, description, priority, TaskCompletion },
+        {
+          progress,
+          description,
+          priority,
+          TaskCompletion: calculatedTaskCompletion,
+        },
         { new: true } // This returns the updated document
       )
-      // Return the updated task
       return res
         .status(200)
         .json({ message: 'Task updated successfully', task: TaskUpdated })
