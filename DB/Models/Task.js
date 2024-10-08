@@ -11,7 +11,7 @@ const TaskSchema = new mongoose.Schema({
   },
   progress: {
     type: String,
-    enum: ['TODO', 'IN_PROGRESS', 'DONE'], // Define possible values for progress
+    enum: ['TODO', 'Minor_progress', 'IN_PROGRESS', 'DONE'], // Define possible values for progress
     default: 'TODO',
   },
   assignedTo: {
