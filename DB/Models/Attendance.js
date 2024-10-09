@@ -38,6 +38,10 @@ const AttendanceSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  onBreak: {
+    type: Boolean,
+    default: false,
+  },
   breakDuration: {
     type: Number,
   },

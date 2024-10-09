@@ -2,7 +2,7 @@ import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
 
 export const UpdateAttendance = async (req, res) => {
-  const { Email, id, ExitTime, CheckInStatus } = req.body
+  const { Email, id, breakDuration, onBreak } = req.body
 
   try {
     // Check if the user exists by querying the User model with the email
@@ -13,8 +13,8 @@ export const UpdateAttendance = async (req, res) => {
       const UpdateAttendance = await AttendanceModel.findByIdAndUpdate(
         id,
         {
-          exit: ExitTime,
-          CheckInStatus: CheckInStatus,
+          onBreak,
+          breakDuration, // Make sure "Exit" matches the schema field name
         },
         { new: true } // This returns the updated document
       )
