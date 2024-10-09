@@ -38,6 +38,9 @@ const AttendanceSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  breakDuration: {
+    type: Number,
+  },
 })
 
 // Create and export the Attendance model
