@@ -1,7 +1,7 @@
 import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
 
-export const UpdateAttendance = async (req, res) => {
+export const UpdateBreak = async (req, res) => {
   const { Email, id, breakDuration, onBreak } = req.body
 
   try {
@@ -10,7 +10,7 @@ export const UpdateAttendance = async (req, res) => {
 
     if (ExistUser) {
       // Update the attendance record by the provided id
-      const UpdateAttendance = await AttendanceModel.findByIdAndUpdate(
+      const UpdateBreak = await AttendanceModel.findByIdAndUpdate(
         id,
         {
           onBreak,
@@ -20,14 +20,14 @@ export const UpdateAttendance = async (req, res) => {
       )
 
       // If no record is found with the given ID, return a 404 error
-      if (!UpdateAttendance) {
+      if (!UpdateBreak) {
         return res.status(404).json({ message: 'Attendance record not found' })
       }
 
       // Respond with success message and the updated attendance data
       return res.status(200).json({
         message: 'Attendance updated successfully',
-        attendance: UpdateAttendance,
+        attendance: UpdateBreak,
       })
     } else {
       // If user doesn't exist, respond with 404
