@@ -16,12 +16,12 @@ export const UpdateBreak = async (req, res) => {
     const updateFields = { onBreak } // Always include onBreak
 
     // Include Break_Start if onBreak is true
-    if (!onBreak) {
-      updateFields.Break_Start = Break_Time /// Use Break_Start only if onBreak is true
+    if (onBreak) {
+      updateFields.Break_Start = Break_Time // Use Break_Start only if onBreak is true
     }
     // Include Break_End if onBreak is false
-    if (onBreak) {
-      updateFields.Break_End = Break_Time // Use Break_End only if onBreak is false
+    if (!onBreak) {
+      updateFields.Break_end = Break_Time // Use Break_End only if onBreak is false
     }
 
     // Update the attendance record by the provided id
