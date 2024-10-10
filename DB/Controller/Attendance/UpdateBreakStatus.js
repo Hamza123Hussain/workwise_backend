@@ -13,14 +13,14 @@ export const UpdateBreak = async (req, res) => {
     }
 
     // Create an object to hold the fields that need to be updated
-    const updateFields = { onBreak } // Always include onBreak
+    const updateFields = { onBreak: !onBreak } // Always include onBreak
 
     // Include Break_Start if onBreak is true
-    if (onBreak) {
+    if (!onBreak) {
       updateFields.Break_Start = Break_Time // Use Break_Start only if onBreak is true
     }
     // Include Break_End if onBreak is false
-    if (!onBreak) {
+    if (onBreak) {
       updateFields.Break_end = Break_Time // Use Break_End only if onBreak is false
     }
 
