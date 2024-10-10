@@ -8,6 +8,7 @@ import { GetUser } from '../Controller/Auth/GetUser.js'
 import { UpdateUser } from '../Controller/Auth/UpdateUser.js'
 import { AllUsers } from '../Controller/Auth/AllUsers.js'
 import { DeleteUser } from '../Controller/Auth/DeleteUser.js'
+import { GetSalaryUser } from '../Controller/Auth/GetUserSalary.js'
 
 const AuthRouter = Router()
 
@@ -16,6 +17,7 @@ AuthRouter.post('/SignIn', Login)
 AuthRouter.get('/Signout', Signout)
 AuthRouter.post('/Reset', ResetPass)
 AuthRouter.get('/GetUser', GetUser)
+AuthRouter.get('/GetUserSalary', GetSalaryUser)
 AuthRouter.get('/AllUsers', AllUsers)
 AuthRouter.post('/UpdateUser', upload.single('Image'), UpdateUser)
 AuthRouter.delete('/DeleteUser', DeleteUser)
