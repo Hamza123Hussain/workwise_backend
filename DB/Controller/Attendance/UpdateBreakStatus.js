@@ -2,7 +2,7 @@ import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
 
 export const UpdateBreak = async (req, res) => {
-  const { Email, id, breakDuration, onBreak } = req.body
+  const { Email, id, Break_Start, Break_end, onBreak } = req.body
 
   try {
     // Check if the user exists by querying the User model with the email
@@ -14,7 +14,8 @@ export const UpdateBreak = async (req, res) => {
         id,
         {
           onBreak,
-          breakDuration, // Make sure "Exit" matches the schema field name
+          Break_Start,
+          Break_end, // Make sure "Exit" matches the schema field name
         },
         { new: true } // This returns the updated document
       )
