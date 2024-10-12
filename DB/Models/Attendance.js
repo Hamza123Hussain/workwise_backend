@@ -46,7 +46,10 @@ const AttendanceSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-
+  Break_Time: {
+    type: Number,
+    default: 0,
+  },
   Break_Start: {
     // Changed to camelCase for consistency
     type: Date,
