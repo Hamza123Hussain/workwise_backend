@@ -22,11 +22,9 @@ export const Break_end = async (req, res) => {
 
       // Check if breakStart exists, otherwise return an error
       if (!attendanceRecord.breakStart) {
-        return res
-          .status(400)
-          .json({
-            message: 'Break_Start not found. Cannot calculate break time.',
-          })
+        return res.status(400).json({
+          message: 'Break_Start not found. Cannot calculate break time.',
+        })
       }
 
       // Extract break start time from the attendance record
@@ -45,11 +43,9 @@ export const Break_end = async (req, res) => {
 
       // Check if the duration is valid
       if (breakDurationMillis < 0) {
-        return res
-          .status(400)
-          .json({
-            message: 'Break_end is before Break_Start. Please check the times.',
-          })
+        return res.status(400).json({
+          message: 'Break_end is before Break_Start. Please check the times.',
+        })
       }
 
       // Convert break duration to hours (as a decimal)
