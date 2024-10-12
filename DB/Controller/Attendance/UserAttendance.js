@@ -2,7 +2,7 @@ import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
 
 export const UserAttendance = async (req, res) => {
-  const { Email } = req.query
+  const { Email, UserData } = req.query
   try {
     // Check if the user exists by querying the User model with the email
     const ExistUser = await User.findOne({ Email })
@@ -11,6 +11,7 @@ export const UserAttendance = async (req, res) => {
       // Fetch all attendance records for the given user's email
       const allAttendance = await AttendanceModel.find({
         Email: ExistUser.Email,
+        UserData,
       }) // Assuming you store the email in "UserData"
 
       // If no records are found, return a 404 error
