@@ -9,25 +9,42 @@ export const UpdateAttendance = async (req, res) => {
     const ExistUser = await User.findOne({ Email })
 
     if (ExistUser) {
-      // Update the attendance record by the provided id
-      const UpdateAttendance = await AttendanceModel.findByIdAndUpdate(
+      // Fetch the attendance record by the provided ID
+      const attendanceRecord = await AttendanceModel.findById(id)
+
+      // If no record is found with the given ID, return a 404 error
+      if (!attendanceRecord) {
+        return res.status(404).json({ message: 'Attendance record not found' })
+      }
+
+      // Extract entry time from the attendance record
+      const entryTime = new Date(attendanceRecord.entry) // Assuming entry is stored as ISO date string
+
+      // Convert ExitTime from the request to a Date object
+      const exitTime = new Date(ExitTime)
+
+      // Calculate the time difference in milliseconds
+      const timeDifferenceMillis = exitTime - entryTime
+
+      // Convert milliseconds to hours
+      const hoursWorked = timeDifferenceMillis / (1000 * 60 * 60)
+
+      // Update the attendance record with the new exit time and check-in status
+      const updatedAttendance = await AttendanceModel.findByIdAndUpdate(
         id,
         {
           exit: ExitTime,
           CheckInStatus: CheckInStatus,
+          Hours_Worked: hoursWorked,
         },
         { new: true } // This returns the updated document
       )
 
-      // If no record is found with the given ID, return a 404 error
-      if (!UpdateAttendance) {
-        return res.status(404).json({ message: 'Attendance record not found' })
-      }
-
       // Respond with success message and the updated attendance data
       return res.status(200).json({
         message: 'Attendance updated successfully',
-        attendance: UpdateAttendance,
+        attendance: updatedAttendance,
+        hoursWorked: hoursWorked, // Include the calculated hours worked in the response
       })
     } else {
       // If user doesn't exist, respond with 404
