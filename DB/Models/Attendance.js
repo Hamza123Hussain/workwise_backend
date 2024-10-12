@@ -42,6 +42,10 @@ const AttendanceSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  Hours_Worked: {
+    type: Number,
+    default: 0,
+  },
 
   Break_Start: {
     // Changed to camelCase for consistency
