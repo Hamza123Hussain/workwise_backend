@@ -10,7 +10,6 @@ export const UserAttendance = async (req, res) => {
     if (ExistUser) {
       // Fetch all attendance records for the given user's email
       const allAttendance = await AttendanceModel.find({
-        Email: ExistUser.Email,
         UserData,
       }) // Assuming you store the email in "UserData"
 
