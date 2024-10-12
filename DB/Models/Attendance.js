@@ -5,22 +5,18 @@ const AttendanceSchema = new mongoose.Schema({
     type: String,
   },
   UserData: {
-    // ref: 'User',
     type: String,
   },
   entry: {
-    // Changed to camelCase for consistency
     type: Date,
-    required: true, // Make it required if you want to ensure entry Attendance is always stored
+    required: true,
   },
   exit: {
-    // Changed to camelCase for consistency
     type: Date,
   },
   currentDate: {
-    // Changed to camelCase for consistency
     type: Date,
-    default: Date.now, // Automatically set to the current date
+    default: Date.now,
   },
   isAbsent: {
     type: Boolean,
@@ -28,7 +24,7 @@ const AttendanceSchema = new mongoose.Schema({
   },
   User_ID: {
     type: String,
-    requried: true,
+    required: true,
   },
   Email: {
     type: String,
@@ -50,15 +46,14 @@ const AttendanceSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  Break_Start: {
-    // Changed to camelCase for consistency
+  breakStart: {
+    // Changed to consistent camelCase
     type: Date,
   },
-  Break_end: {
-    // Changed to camelCase for consistency
+  breakEnd: {
+    // Changed to consistent camelCase
     type: Date,
   },
 })
 
-// Create and export the Attendance model
 export const AttendanceModel = mongoose.model('Attendance', AttendanceSchema)

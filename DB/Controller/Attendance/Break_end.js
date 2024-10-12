@@ -18,7 +18,7 @@ export const Break_end = async (req, res) => {
       }
 
       // Extract break start time from the attendance record
-      const breakStart = new Date(attendanceRecord.Break_Start) // Assuming Break_start is stored as an ISO date string
+      const breakStart = new Date(attendanceRecord.breakStart) // Fixed to match camelCase in schema
       const breakEnd = new Date(Break_end) // Convert Break_end from the request to a Date object
 
       // Calculate the break duration in milliseconds
@@ -35,8 +35,8 @@ export const Break_end = async (req, res) => {
         id,
         {
           onBreak,
-          Break_end,
-          Break_Time: breakDurationHours, //break_time
+          breakEnd, // Use camelCase here
+          Break_Time: breakDurationHours, // Break_Time in schema remains unchanged
         },
         { new: true } // This returns the updated document
       )
