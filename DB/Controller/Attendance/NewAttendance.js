@@ -1,7 +1,6 @@
 import { User } from '../../Models/User.js'
 import { AttendanceModel } from '../../Models/Attendance.js'
 import { v4 } from 'uuid'
-
 export const NewAttendance = async (req, res) => {
   const { Email, EntryTime, CheckInStatus, location } = req.body
   const randomid = v4()
