@@ -54,6 +54,8 @@ const AttendanceSchema = new mongoose.Schema({
     // Changed to consistent camelCase
     type: Date,
   },
+  latitude: { type: Number, required: true },
+  longitude: { type: Number, required: true },
 })
 
 export const AttendanceModel = mongoose.model('Attendance', AttendanceSchema)

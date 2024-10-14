@@ -3,7 +3,7 @@ import { AttendanceModel } from '../../Models/Attendance.js'
 import { v4 } from 'uuid'
 
 export const NewAttendance = async (req, res) => {
-  const { Email, EntryTime, CheckInStatus } = req.body
+  const { Email, EntryTime, CheckInStatus, latitude, longitude } = req.body
   const randomid = v4()
   try {
     // Check if the user exists by querying the User model with the email
@@ -20,6 +20,8 @@ export const NewAttendance = async (req, res) => {
         entry: EntryTime, // Assuming EntryTime is in the correct format
         isAbsent: false, // Mark user as present,
         currentDate: new Date(), // Store the current date
+        latitude,
+        longitude,
       })
 
       // Respond with success message and the newly created attendance data
