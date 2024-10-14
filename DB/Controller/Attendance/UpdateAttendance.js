@@ -2,7 +2,7 @@ import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
 
 export const UpdateAttendance = async (req, res) => {
-  const { Email, id, ExitTime, CheckInStatus, location } = req.body
+  const { Email, id, ExitTime, CheckInStatus } = req.body
 
   try {
     // Check if the user exists by querying the User model with the email
@@ -36,8 +36,6 @@ export const UpdateAttendance = async (req, res) => {
           exit: ExitTime,
           CheckInStatus: CheckInStatus,
           Hours_Worked: hoursWorked,
-          latitude: location.latitude,
-          longitude: location.longitude,
         },
         { new: true } // This returns the updated document
       )
