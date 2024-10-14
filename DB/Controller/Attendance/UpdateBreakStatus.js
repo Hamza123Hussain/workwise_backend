@@ -26,7 +26,7 @@ export const UpdateBreak = async (req, res) => {
       // Calculate the break duration (difference between breakEnd and breakStart)
       const breakStart = new Date(attendanceRecord.breakStart)
       const breakEnd = new Date(Break_Time)
-      breakDuration = (breakEnd - breakStart) / 1000 / 60 // Convert from milliseconds to minutes
+      breakDuration = (breakEnd - breakStart) / 1000 / 60 / 60 // Convert from milliseconds to hours
 
       // Update the total breakTime in the attendance record
       updateFields.Break_Time =
