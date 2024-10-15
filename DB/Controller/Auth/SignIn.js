@@ -18,22 +18,14 @@ export const Login = async (req, res) => {
         return res.status(200).json(UserFound)
       } else {
         // If user is not found in MongoDB, return an error
-        return res.status(404).json({ message: 'User not registered' })
+        return res.status(404).json({ message: 'User not Registered ' })
       }
     } else {
-      // Firebase signIn failed for some reason (should not reach here)
+      // Firebase signIn failed for some reason
       return res.status(401).json({ message: 'Invalid login credentials' })
     }
   } catch (error) {
     // Handle errors such as invalid credentials or Firebase issues
-    if (error.code === 'auth/wrong-password') {
-      return res.status(401).json({ message: 'Incorrect password' })
-    } else if (error.code === 'auth/user-not-found') {
-      return res.status(404).json({ message: 'User not found' })
-    } else {
-      return res
-        .status(500)
-        .json({ message: 'An error occurred: ' + error.message })
-    }
+    return res.status(500).json({ message: error.message })
   }
 }
