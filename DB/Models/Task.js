@@ -42,6 +42,12 @@ const TaskSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  TaskType: {
+    // Added priority field
+    type: String,
+    enum: ['Daliy', 'Weekly', 'Other'], // Define possible values for priority
+    default: 'Daliy', // Default priority
+  },
 })
 
 // Create and export the Task model

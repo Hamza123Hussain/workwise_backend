@@ -3,7 +3,8 @@ import { TaskModel } from '../../Models/Task.js'
 import { User } from '../../Models/User.js'
 
 export const CreateTask = async (req, res) => {
-  const { description, dueDate, assignedTo, name, Email, priority } = req.body
+  const { description, dueDate, assignedTo, name, Email, priority, TaskType } =
+    req.body
   const randomid = v4()
   try {
     // Check if the user exists using findOne instead of find
@@ -18,6 +19,7 @@ export const CreateTask = async (req, res) => {
         dueDate,
         description,
         priority,
+        TaskType,
       })
       await TaskCreate.save()
       // Return the created task
