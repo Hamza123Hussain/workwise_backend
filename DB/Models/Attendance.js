@@ -56,7 +56,7 @@ const AttendanceSchema = new mongoose.Schema({
   },
   // latitude: { type: Number, required: true },
   // longitude: { type: Number, required: true },
-  // location: { type: String, required: true },
+  location: { type: String, required: true },
 })
 
 export const AttendanceModel = mongoose.model('Attendance', AttendanceSchema)

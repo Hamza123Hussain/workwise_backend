@@ -1,6 +1,7 @@
 import { User } from '../../Models/User.js'
 import { AttendanceModel } from '../../Models/Attendance.js'
 import { v4 } from 'uuid'
+import { getAddressFromCoordinates } from './CurrentLOCATION.js'
 export const NewAttendance = async (req, res) => {
   const { Email, EntryTime, CheckInStatus, location } = req.body
   const randomid = v4()
@@ -21,6 +22,10 @@ export const NewAttendance = async (req, res) => {
         currentDate: new Date(), // Store the current date
         // latitude: location.latitude,
         // longitude: location.longitude,
+        location: getAddressFromCoordinates(
+          location.latitude,
+          location.longitude
+        ),
       })
 
       // Respond with success message and the newly created attendance data
