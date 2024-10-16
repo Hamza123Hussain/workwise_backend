@@ -19,8 +19,8 @@ export const NewAttendance = async (req, res) => {
         entry: EntryTime, // Assuming EntryTime is in the correct format
         isAbsent: false, // Mark user as present,
         currentDate: new Date(), // Store the current date
-        latitude: location.latitude,
-        longitude: location.longitude,
+        // latitude: location.latitude,
+        // longitude: location.longitude,
       })
 
       // Respond with success message and the newly created attendance data
