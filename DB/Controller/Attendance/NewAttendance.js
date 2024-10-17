@@ -4,17 +4,17 @@ import { AttendanceModel } from '../../Models/Attendance.js'
 import { v4 } from 'uuid'
 // import { getAddressFromCoordinates } from './CurrentLOCATION.js'
 export const NewAttendance = async (req, res) => {
-  const { Email, EntryTime, CheckInStatus, location } = req.body
+  const { Email, EntryTime, CheckInStatus } = req.body
   const randomid = v4()
   try {
     // Check if the user exists by querying the User model with the email
     const ExistUser = await User.findOne({ Email })
     if (ExistUser) {
       // Fetch the exact location from latitude and longitude
-      const address = await getAddressFromCoordinates(
-        location.latitude,
-        location.longitude
-      )
+      // const address = await getAddressFromCoordinates(
+      //   location.latitude,
+      //   location.longitude
+      // )
       // Create a new attendance record
       const NewAttendance = await AttendanceModel.create({
         _id: randomid,
@@ -25,7 +25,7 @@ export const NewAttendance = async (req, res) => {
         entry: EntryTime, // Assuming EntryTime is in the correct format
         isAbsent: false, // Mark user as present
         currentDate: new Date(), // Store the current date
-        location: address, // Use the fetched address instead of raw latitude/longitude
+        // location: address, // Use the fetched address instead of raw latitude/longitude
       })
       // Respond with success message and the newly created attendance data
       return res.status(201).json({
