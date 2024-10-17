@@ -4,7 +4,7 @@ import { AttendanceModel } from '../../Models/Attendance.js'
 import { v4 } from 'uuid'
 // import { getAddressFromCoordinates } from './CurrentLOCATION.js'
 export const NewAttendance = async (req, res) => {
-  const { Email, EntryTime, CheckInStatus, location } = req.body
+  const { Email, EntryTime, CheckInStatus } = req.body
   const randomid = v4()
   try {
     // Check if the user exists by querying the User model with the email
