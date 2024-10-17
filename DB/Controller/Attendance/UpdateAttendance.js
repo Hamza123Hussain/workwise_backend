@@ -1,16 +1,16 @@
 import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
-import { getAddressFromCoordinates } from './CurrentLOCATION.js'
+// import { getAddressFromCoordinates } from './CurrentLOCATION.js'
 export const UpdateAttendance = async (req, res) => {
   const { Email, id, ExitTime, CheckInStatus, location } = req.body
   try {
     // Check if the user exists by querying the User model with the email
     const ExistUser = await User.findOne({ Email })
     if (ExistUser) {
-      const address = await getAddressFromCoordinates(
-        location.latitude,
-        location.longitude
-      )
+      // const address = await getAddressFromCoordinates(
+      //   location.latitude,
+      //   location.longitude
+      // )
       // Fetch the attendance record by the provided ID
       const attendanceRecord = await AttendanceModel.findById(id)
       // If no record is found with the given ID, return a 404 error
@@ -32,9 +32,9 @@ export const UpdateAttendance = async (req, res) => {
           exit: ExitTime,
           CheckInStatus: CheckInStatus,
           Hours_Worked: hoursWorked,
-          location: address,
-          latitude: location.latitude,
-          longitude: location.longitude,
+          // location: address,
+          // latitude: location.latitude,
+          // longitude: location.longitude,
         },
         { new: true } // This returns the updated document
       )
