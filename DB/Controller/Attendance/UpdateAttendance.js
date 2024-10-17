@@ -1,6 +1,6 @@
 import { AttendanceModel } from '../../Models/Attendance.js'
 import { User } from '../../Models/User.js'
-// import { getAddressFromCoordinates } from './CurrentLOCATION.js'
+import { getAddressFromCoordinates } from './CurrentLOCATION.js'
 export const UpdateAttendance = async (req, res) => {
   const { Email, id, ExitTime, CheckInStatus, location } = req.body
   try {
