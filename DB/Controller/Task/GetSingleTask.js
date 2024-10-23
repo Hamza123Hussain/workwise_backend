@@ -14,7 +14,7 @@ export const GetSingleTask = async (req, res) => {
     // Retrieve the specific task for the user
     const task = await TaskModel.findOne({
       _id: taskId,
-      assignedTo: UserExist.Name,
+      // assignedTo: UserExist.Name,
     }) // Ensure that the task belongs to the user
     if (!task) {
       return res.status(404).json({ message: 'Task not found for this user' })
