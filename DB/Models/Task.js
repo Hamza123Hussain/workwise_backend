@@ -45,8 +45,8 @@ const TaskSchema = new mongoose.Schema({
   TaskType: {
     // Added priority field
     type: String,
-    enum: ['Daliy', 'Weekly', 'Other'], // Define possible values for priority
-    default: 'Daliy', // Default priority
+    enum: ['Daily', 'Weekly', 'Other'], // Define possible values for priority
+    default: 'Daily', // Default priority
   },
 })
 
