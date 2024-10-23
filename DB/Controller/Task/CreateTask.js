@@ -1,27 +1,41 @@
 import { v4 } from 'uuid'
 import { TaskModel } from '../../Models/Task.js'
 import { User } from '../../Models/User.js'
+import dayjs from 'dayjs' // Use dayjs for date manipulation, install with `npm i dayjs`
 
 export const CreateTask = async (req, res) => {
   const { description, dueDate, assignedTo, name, Email, priority, TaskType } =
     req.body
   const randomid = v4()
+
   try {
-    // Check if the user exists using findOne instead of find
+    // Check if the user exists using findOne
     const UserExist = await User.findOne({ Email })
 
     if (UserExist) {
+      // Set the due date based on the TaskType
+      let calculatedDueDate = dueDate // Default is the provided due date
+      const currentDate = dayjs()
+
+      if (TaskType === 'Daily') {
+        calculatedDueDate = currentDate.toISOString() // Use today's date
+      } else if (TaskType === 'Weekly') {
+        calculatedDueDate = currentDate.add(7, 'day').toISOString() // Set due date to one week from now
+      }
+
       // Create the task
       const TaskCreate = await TaskModel.create({
         _id: randomid,
         name,
         assignedTo,
-        dueDate,
+        dueDate: calculatedDueDate,
         description,
         priority,
         TaskType,
       })
+
       await TaskCreate.save()
+
       // Return the created task
       return res
         .status(201)
