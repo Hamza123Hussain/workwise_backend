@@ -23,11 +23,11 @@ export const CreateTask = async (req, res) => {
         calculatedDueDate = currentDate.add(7, 'day').toISOString() // Set due date to one week from now
       }
 
-      // Create the task with multiple assigned users
+      // Create the task
       const TaskCreate = await TaskModel.create({
         _id: randomid,
         name,
-        assignedTo, // Assigned to multiple users
+        assignedTo,
         dueDate: calculatedDueDate,
         description,
         priority,
