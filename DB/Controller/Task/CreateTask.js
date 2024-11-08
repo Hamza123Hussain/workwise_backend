@@ -1,56 +1,80 @@
-import { v4 } from 'uuid'
 import { TaskModel } from '../../Models/Task.js'
-import { User } from '../../Models/User.js'
-import dayjs from 'dayjs' // Use dayjs for date manipulation, install with `npm i dayjs`
-
-export const CreateTask = async (req, res) => {
-  const { description, dueDate, assignedTo, name, Email, priority, TaskType } =
-    req.body
-  const randomid = v4()
+import { v4 } from 'uuid'
+// Function to create a task for a single user
+const createTaskForUser = async ({
+  name,
+  description,
+  priority,
+  TaskType,
+  dueDate,
+  assignedTo,
+}) => {
+  const task = new TaskModel({
+    _id: v4(),
+    name,
+    description,
+    priority,
+    TaskType,
+    dueDate,
+    assignedTo,
+  })
 
   try {
-    // Check if the user exists using findOne
-    const UserExist = await User.findOne({ Email })
+    await task.save()
+    return task
+  } catch (error) {
+    console.error('Error saving task for user:', assignedTo, error)
+    throw error // Rethrow the error so it can be caught in the controller
+  }
+}
 
-    if (UserExist) {
-      // Set the due date based on the TaskType
-      let calculatedDueDate = dueDate // Default is the provided due date
-      const currentDate = dayjs()
+// Main createTask function
+export const createTask = async (req, res) => {
+  const { name, description, priority, TaskType, dueDate, assignedTo } =
+    req.body
 
-      if (TaskType === 'Daily') {
-        calculatedDueDate = currentDate.toISOString() // Use today's date
-      } else if (TaskType === 'Weekly') {
-        calculatedDueDate = currentDate.add(7, 'day').toISOString() // Set due date to one week from now
-      }
-
-      // Create the task
-      const TaskCreate = await TaskModel.create({
-        _id: randomid,
+  // Check if assignedTo is a single user or an array
+  if (Array.isArray(assignedTo)) {
+    // If assignedTo is an array, loop through and create a task for each user
+    try {
+      const taskPromises = assignedTo.map((user) =>
+        createTaskForUser({
+          name,
+          description,
+          priority,
+          TaskType,
+          dueDate,
+          assignedTo: user,
+        })
+      )
+      await Promise.all(taskPromises) // Wait for all tasks to be created
+      return res
+        .status(200)
+        .json({ message: 'Tasks created for multiple users' })
+    } catch (error) {
+      console.error('Error creating tasks for multiple users:', error)
+      return res.status(500).json({
+        message: 'Error creating tasks for multiple users',
+        error: error.message,
+      })
+    }
+  } else {
+    // If assignedTo is a single user, create the task for that user
+    try {
+      await createTaskForUser({
         name,
-        assignedTo,
-        dueDate: calculatedDueDate,
         description,
         priority,
         TaskType,
+        dueDate,
+        assignedTo,
       })
-
-      await TaskCreate.save()
-
-      // Return the created task
+      return res.status(200).json({ message: 'Task created for user' })
+    } catch (error) {
+      console.error('Error creating task for user:', assignedTo, error)
       return res
-        .status(201)
-        .json({ message: 'Task created successfully', task: TaskCreate })
-    } else {
-      // If user does not exist, return 404
-      return res.status(404).json({ message: 'User does not exist' })
+        .status(500)
+        .json({ message: 'Error creating task', error: error.message })
     }
-  } catch (error) {
-    // Log the error for debugging purposes (optional)
-    console.error('Error creating task:', error)
-
-    // Return a generic error message to the client
-    return res
-      .status(500)
-      .json({ message: 'An error occurred while creating the task' })
   }
 }
