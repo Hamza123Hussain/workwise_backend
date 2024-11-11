@@ -35,17 +35,9 @@ export const TaskUpdated = async (req, res) => {
         { new: true } // This returns the updated document
       )
 
-      // Update the user's total PointsGained
-      const UserUpdated = await User.findByIdAndUpdate(
-        UserExist._id,
-        { PointsGained: newPointsGained },
-        { new: true } // This returns the updated document
-      )
-
       return res.status(200).json({
         message: 'Task updated successfully',
         task: TaskUpdated,
-        user: UserUpdated,
       })
     } else {
       return res.status(404).json({ message: 'User does not exist' })
