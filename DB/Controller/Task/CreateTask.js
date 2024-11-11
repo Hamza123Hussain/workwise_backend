@@ -1,5 +1,6 @@
 import { TaskModel } from '../../Models/Task.js'
 import { v4 } from 'uuid'
+
 // Function to create a task for a single user
 const createTaskForUser = async ({
   name,
@@ -9,6 +10,25 @@ const createTaskForUser = async ({
   dueDate,
   assignedTo,
 }) => {
+  // Set the TotalPoints based on the priority
+  let totalPoints = 0
+  if (priority === 'HIGH') {
+    totalPoints = 10
+  } else if (priority === 'MEDIUM') {
+    totalPoints = 5
+  } else if (priority === 'LOW') {
+    totalPoints = 2.5
+  }
+
+  // Determine the due date based on TaskType
+  if (TaskType === 'Daily') {
+    dueDate = new Date() // Set to current date if Daily
+  } else if (TaskType === 'Weekly') {
+    dueDate = new Date() // Set to current date
+    dueDate.setDate(dueDate.getDate() + 7) // Add 7 days for Weekly tasks
+  }
+
+  // Create a new task with the provided details
   const task = new TaskModel({
     _id: v4(),
     name,
@@ -17,9 +37,12 @@ const createTaskForUser = async ({
     TaskType,
     dueDate,
     assignedTo,
+    PointsGained: 0, // PointsGained should always be 0 when creating a new task
+    TotalPoints: totalPoints, // Set TotalPoints based on the priority
   })
 
   try {
+    // Save the task to the database
     await task.save()
     return task
   } catch (error) {
@@ -28,7 +51,7 @@ const createTaskForUser = async ({
   }
 }
 
-// Main createTask function
+// Main createTask function (to handle request and response)
 export const createTask = async (req, res) => {
   const { name, description, priority, TaskType, dueDate, assignedTo } =
     req.body
