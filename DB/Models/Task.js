@@ -50,6 +50,13 @@ const TaskSchema = new mongoose.Schema({
     enum: ['Daily', 'Weekly', 'Other'],
     default: 'Daily',
   },
+  UpdatedBY: {
+    type: String,
+  },
+  UpdatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 // Create and export the Task model
