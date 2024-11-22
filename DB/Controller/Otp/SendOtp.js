@@ -1,5 +1,7 @@
 import Otp from '../../Models/Otp.js'
+import bcrypt from 'bcryptjs' // Import bcrypt to hash the OTP
 import { generateOtp, transporter } from './Email_and_otp.js'
+
 export const SendOtp = async (req, res) => {
   const { email } = req.body
   if (!email) {
@@ -7,11 +9,26 @@ export const SendOtp = async (req, res) => {
       .status(400)
       .json({ success: false, message: 'Email is required.' })
   }
+
   const otp = generateOtp()
+  const saltRounds = 10 // Set the salt rounds for bcrypt
+
   try {
-    // Save OTP in MongoDB
-    const otpRecord = new Otp({ email, otp })
-    await otpRecord.save()
+    // Hash the OTP before storing it
+    const hashedOtp = await bcrypt.hash(otp.toString(), saltRounds)
+
+    // Check if email exists in the database
+    const emailexist = await Otp.findOne({ email })
+
+    if (emailexist) {
+      // If email exists, update the OTP for the existing record (hashed)
+      emailexist.otp = hashedOtp
+      await emailexist.save()
+    } else {
+      // If email doesn't exist, create a new OTP record (hashed)
+      await Otp.create({ email, otp: hashedOtp })
+    }
+
     // Send OTP to email, using HTML for styling
     const mailOptions = {
       from: 'octtoppus1@gmail.com', // Your email address
@@ -34,7 +51,9 @@ export const SendOtp = async (req, res) => {
         </html>
       `,
     }
+
     await transporter.sendMail(mailOptions)
+
     return res.status(200).json({
       success: true,
       message: 'OTP sent successfully.',
