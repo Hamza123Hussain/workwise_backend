@@ -17,6 +17,7 @@ app.use('/Api/Auth', AuthRouter)
 app.use('/Api/Attendance', AttendanceRouter)
 app.use('/Api/Task', TaskRouter)
 app.use('/Api/Otp', OtpRouter)
+
 DB_CONNECTED()
 app.listen(PORT, () => {
   console.log('port is on')
