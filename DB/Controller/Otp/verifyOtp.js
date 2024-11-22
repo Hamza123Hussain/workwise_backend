@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs' // Import bcrypt for OTP comparison
 import Otp from '../../Models/Otp.js'
-import { User } from '../../Models/User.js'
 export const VerifyOtp = async (req, res) => {
   const { email, otp } = req.body
   if (!email || !otp) {
