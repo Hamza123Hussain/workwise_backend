@@ -18,8 +18,6 @@ export const TaskUpdated = async (req, res) => {
       )
 
       // Update the total PointsGained for the user based on the task completion
-      const pointsToAdd =
-        (calculatedTaskCompletion / 100) * TaskExist.TotalPoints // Assuming TaskExist has PointsGained
 
       // Get current date and time for UpdatedAt field
       const currentDate = new Date()
@@ -33,7 +31,8 @@ export const TaskUpdated = async (req, res) => {
           description,
           priority,
           TaskCompletion: calculatedTaskCompletion,
-          PointsGained: pointsToAdd,
+          PointsGained:
+            (calculatedTaskCompletion / 100) * TaskExist.TotalPoints, // Assuming TaskExist has PointsGained,
           UpdatedBY: Email,
           UpdatedAt: currentDate, // Set the current date and time for the update
         },
