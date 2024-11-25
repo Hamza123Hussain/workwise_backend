@@ -3,7 +3,7 @@ import { User } from '../../Models/User.js'
 import { calculateTaskCompletion } from './Task_Calculation.js'
 
 export const TaskUpdated = async (req, res) => {
-  const { id, Email, progress, description, priority } = req.body
+  const { id, Email, progress, description, priority, name } = req.body
   try {
     const UserExist = await User.findOne({ Email })
     if (UserExist) {
@@ -29,6 +29,7 @@ export const TaskUpdated = async (req, res) => {
         id,
         {
           progress,
+          name,
           description,
           priority,
           TaskCompletion: calculatedTaskCompletion,
