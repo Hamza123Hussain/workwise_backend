@@ -1,6 +1,7 @@
 import { TaskModel } from '../../Models/Task.js'
 import { User } from '../../Models/User.js'
 import { calculateTaskCompletion } from './Task_Calculation.js'
+
 export const TaskUpdated = async (req, res) => {
   const { id, Email, progress, description, priority, name } = req.body
   try {
@@ -15,9 +16,12 @@ export const TaskUpdated = async (req, res) => {
         progress,
         priority
       )
+
       // Update the total PointsGained for the user based on the task completion
+
       // Get current date and time for UpdatedAt field
       const currentDate = new Date()
+
       // Update the task with the new calculated TaskCompletion
       const TaskUpdated = await TaskModel.findByIdAndUpdate(
         id,
@@ -34,6 +38,7 @@ export const TaskUpdated = async (req, res) => {
         },
         { new: true } // This returns the updated document
       )
+
       return res.status(200).json({
         message: 'Task updated successfully',
         task: TaskUpdated,
