@@ -27,7 +27,8 @@ export const TaskUpdated = async (req, res) => {
           description,
           priority,
           TaskCompletion: calculatedTaskCompletion,
-          PointsGained: (TaskCompletion / 100) * TaskExist.TotalPoints, // Assuming TaskExist has PointsGained,
+          PointsGained:
+            (calculatedTaskCompletion / 100) * TaskExist.TotalPoints, // Assuming TaskExist has PointsGained,
           UpdatedBY: Email,
           UpdatedAt: currentDate, // Set the current date and time for the update
         },
