@@ -43,7 +43,6 @@ const TaskSchema = new mongoose.Schema({
   },
   PointsGained: {
     type: Number,
-    default: 0, // Default value for PointsGained
   },
   TaskType: {
     type: String,
