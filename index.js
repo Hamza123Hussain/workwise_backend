@@ -6,6 +6,8 @@ import TaskRouter from './DB/Router/TaskRouter.js'
 import AttendanceRouter from './DB/Router/AttendanceRouter.js'
 import { PORT } from './Config.js'
 import OtpRouter from './DB/Router/OtpRouter.js'
+import { ReportRouter } from './DB/Router/ReportRouter.js'
+import { CandidateRouter } from './DB/Router/CandidateRouter.js'
 const app = express()
 app.use(express.json())
 const corsOptions = {
@@ -17,7 +19,8 @@ app.use('/Api/Auth', AuthRouter)
 app.use('/Api/Attendance', AttendanceRouter)
 app.use('/Api/Task', TaskRouter)
 app.use('/Api/Otp', OtpRouter)
-
+app.use('/Api/Report', ReportRouter)
+app.use('/Api/Candidate', CandidateRouter)
 DB_CONNECTED()
 app.listen(PORT, () => {
   console.log('port is on')
