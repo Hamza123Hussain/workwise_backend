@@ -12,11 +12,7 @@ const CandidateSchema = new mongoose.Schema(
     ExpectedSalary: { type: Number },
     CurrentSalary: { type: Number },
     Address: {
-      Street: { type: String },
-      City: { type: String },
-      State: { type: String },
-      Country: { type: String },
-      ZipCode: { type: String },
+      type: String,
     },
     Progress: {
       type: String,
@@ -40,7 +36,10 @@ const CandidateSchema = new mongoose.Schema(
     Notes: [
       {
         Comment: { type: String },
-        AddedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        AddedBy: {
+          Name: { required: true, type: String },
+          Email: { required: true, type: String },
+        },
         AddedAt: { type: Date, default: Date.now },
       },
     ],
@@ -56,12 +55,7 @@ const CandidateSchema = new mongoose.Schema(
       default: 'Direct Application',
     },
     UpdatedAt: { type: Date, default: Date.now },
-    UpdatedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    ManagedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Recruiter or Manager responsible
+    UpdatedBy: { type: String },
     IsActive: { type: Boolean, default: true }, // For soft delete functionality
   },
   {
