@@ -11,9 +11,7 @@ const CandidateSchema = new mongoose.Schema(
     Qualification: { type: String },
     ExpectedSalary: { type: Number },
     CurrentSalary: { type: Number },
-    Address: {
-      type: String,
-    },
+    Address: { type: String },
     Progress: {
       type: String,
       enum: ['NotNeeded', 'Interviewed', 'Hired', 'Called', 'Offered', 'New'],
