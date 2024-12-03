@@ -10,6 +10,9 @@ const Mongo_url = process.env.Mongo_url
 const PORT = process.env.PORT
 const user = process.env.OTP_user
 const password = process.env.OTP_pass
+const Zoom_Acc_ID = process.env.ZOOM_AccountID
+const ZOOM_C_ID = process.env.ZOOM_ClientID
+const ZOOM_secret = process.env.ZOOM_ClientSecret
 export {
   PORT,
   apiKey,
@@ -21,4 +24,7 @@ export {
   Mongo_url,
   user,
   password,
+  ZOOM_C_ID,
+  Zoom_Acc_ID,
+  ZOOM_secret,
 }
