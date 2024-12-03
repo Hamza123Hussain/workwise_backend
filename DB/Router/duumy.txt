@@ -1,0 +1,22 @@
+ServerSecret:e822d72e405e1625b6f1a90e693dae3b
+AppID:1506695392
+{
+           	turnOnMicrophoneWhenJoining: true,
+           	turnOnCameraWhenJoining: true,
+           	showMyCameraToggleButton: true,
+           	showMyMicrophoneToggleButton: true,
+           	showAudioVideoSettingsButton: true,
+           	showScreenSharingButton: true,
+           	showTextChat: true,
+           	showUserList: true,
+           	maxUsers: 50,
+           	layout: "Sidebar",
+           	showLayoutButton: true,
+           	scenario: {
+           		mode: "VideoConference",
+           		config: {
+           			role: "Host",
+         		},
+         	},
+         }
+         
