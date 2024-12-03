@@ -1,7 +1,7 @@
 import CandidateModel from '../../Models/Candidates.js'
 import { User } from '../../Models/User.js'
 export const GetCandidates = async (req, res) => {
-  const { Email } = req.body
+  const { Email } = req.params
   try {
     const UserExist = await User.find({ Email })
     if (UserExist) {
