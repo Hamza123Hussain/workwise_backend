@@ -6,6 +6,7 @@ const CandidateSchema = new mongoose.Schema(
     Email: { type: String, required: true, unique: true },
     Phone: { type: String },
     LinkedInProfile: { type: String },
+    ImageUrl: { type: String },
     Portfolio: { type: String }, // Link to personal portfolio or website
     Position: { type: String, required: true },
     Qualification: { type: String },
