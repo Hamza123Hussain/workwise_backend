@@ -8,6 +8,8 @@ import { PORT } from './Config.js'
 import OtpRouter from './DB/Router/OtpRouter.js'
 import { ReportRouter } from './DB/Router/ReportRouter.js'
 import { CandidateRouter } from './DB/Router/CandidateRouter.js'
+import { MeetingRouter } from './DB/Router/MeetingRouter.js'
+import MessageRouter from './DB/Router/MessageRouter.js'
 const app = express()
 app.use(express.json())
 const corsOptions = {
@@ -21,6 +23,8 @@ app.use('/Api/Task', TaskRouter)
 app.use('/Api/Otp', OtpRouter)
 app.use('/Api/Report', ReportRouter)
 app.use('/Api/Candidate', CandidateRouter)
+app.use('/Api/Meeting', MeetingRouter)
+app.use('/Api/Message', MessageRouter)
 DB_CONNECTED()
 app.listen(PORT, () => {
   console.log('port is on')
