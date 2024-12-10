@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 const CandidateSchema = new mongoose.Schema(
   {
     Name: { type: String, required: true },
@@ -56,10 +57,26 @@ const CandidateSchema = new mongoose.Schema(
     UpdatedAt: { type: Date, default: Date.now },
     UpdatedBy: { type: String },
     IsActive: { type: Boolean, default: true }, // For soft delete functionality
+
+    // Newly added fields
+    ReferralDetails: {
+      ReferrerName: { type: String },
+      ReferrerEmail: { type: String },
+    },
+    LastContacted: { type: Date },
+    ApplicationDate: { type: Date },
+    StatusHistory: [
+      {
+        Status: { type: String },
+        UpdatedAt: { type: Date, default: Date.now },
+        UpdatedBy: { type: String },
+      },
+    ],
   },
   {
     timestamps: true, // Automatically includes `createdAt` and `updatedAt`
   }
 )
+
 const CandidateModel = mongoose.model('Candidate', CandidateSchema)
 export default CandidateModel
