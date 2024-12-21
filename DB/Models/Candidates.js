@@ -57,10 +57,10 @@ const CandidateSchema = new mongoose.Schema(
     UpdatedBy: { type: String },
     IsActive: { type: Boolean, default: true }, // For soft delete functionality
     // Newly added fields
-    ReferralDetails: {
-      ReferrerName: { type: String },
-      ReferrerEmail: { type: String },
-    },
+
+    ReferrerName: { type: String },
+    ReferrerEmail: { type: String },
+
     LastContacted: { type: Date },
     ApplicationDate: { type: Date },
     StatusHistory: [
