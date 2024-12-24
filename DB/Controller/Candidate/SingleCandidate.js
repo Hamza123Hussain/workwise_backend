@@ -6,7 +6,7 @@ export const GetCandidate = async (req, res) => {
   try {
     const UserExist = await User.find({ Email })
     if (UserExist) {
-      const CandidateFound = await CandidateModel.find({ _id })
+      const CandidateFound = await CandidateModel.findOne({ _id })
       if (CandidateFound) {
         res.status(200).json(CandidateFound)
       } else {
