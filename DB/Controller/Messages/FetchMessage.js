@@ -12,10 +12,19 @@ export const GetMessages = async (req, res) => {
     const snapshot = await get(chatRef)
 
     if (snapshot.exists()) {
-      // If messages exist, return them as a response
+      // Convert the messages object to an array
+      const messagesObject = snapshot.val()
+      const messagesArray = Object.entries(messagesObject).map(
+        ([id, data]) => ({
+          id, // Include the Firebase key as `id`
+          ...data, // Spread the rest of the message properties
+        })
+      )
+
+      // Respond with the transformed array
       res.status(200).json({
         chatId,
-        messages: snapshot.val(), // Messages from Firebase
+        messages: messagesArray,
       })
     } else {
       // If no messages exist, return a message indicating so
