@@ -27,6 +27,7 @@ app.use('/Api/Candidate', CandidateRouter)
 app.use('/Api/Meeting', MeetingRouter)
 app.use('/Api/Message', MessageRouter)
 app.use('/Api/Notice', NoticeRouter)
+
 DB_CONNECTED()
 app.listen(PORT, () => {
   console.log('port is on')
