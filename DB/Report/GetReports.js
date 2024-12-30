@@ -2,7 +2,7 @@ import { Report } from '../Models/Report.js'
 import { User } from '../Models/User.js'
 
 export const GetAllReports = async (req, res) => {
-  const { email } = req.body
+  const { email } = req.query
   try {
     const AdminAcess = await User.findOne({ Email: email })
     if (AdminAcess && AdminAcess.Email === 'octtoppus1@gmail.com') {
