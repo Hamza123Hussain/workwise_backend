@@ -5,11 +5,14 @@ import { ref, push, set, get } from 'firebase/database'
 export const SendMessage = async (req, res) => {
   const { text, userId, recipientId, chatId } = req.body
 
+  // Sanitize chatId to ensure it's a valid Firebase path
+  const sanitizedChatId = chatId.replace(/@/g, '-at-').replace(/\./g, '-dot-')
+
   // Log the incoming request data for debugging
   console.log(req.body)
 
   // Validate input data
-  if (!text || !userId || !recipientId || !chatId) {
+  if (!text || !userId || !recipientId || !sanitizedChatId) {
     return res.status(400).json({
       error: 'Missing required fields: text, userId, recipientId, or chatId.',
     })
@@ -17,7 +20,7 @@ export const SendMessage = async (req, res) => {
 
   try {
     // Reference to the chat messages in Firebase Realtime Database
-    const chatRef = ref(database, `chats/${chatId}/messages`)
+    const chatRef = ref(database, `chats/${sanitizedChatId}/messages`)
 
     // Check if the chat already exists by querying for messages
     const snapshot = await get(chatRef)
@@ -44,7 +47,7 @@ export const SendMessage = async (req, res) => {
     res.status(201).json({
       message: 'Message sent successfully',
       messageId: messageRef.key, // Return the Firebase message ID (key)
-      chatId, // Return the chat ID
+      chatId: sanitizedChatId, // Return the sanitized chat ID
     })
   } catch (error) {
     res.status(400).json({ error: error.message })
