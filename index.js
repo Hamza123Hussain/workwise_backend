@@ -11,6 +11,7 @@ import { CandidateRouter } from './DB/Router/CandidateRouter.js'
 import { MeetingRouter } from './DB/Router/MeetingRouter.js'
 import MessageRouter from './DB/Router/MessageRouter.js'
 import NoticeRouter from './DB/Router/NoticeRouter.js'
+import { KPIROUTER } from './DB/Router/KPIROUTER.js'
 const app = express()
 app.use(express.json())
 const corsOptions = {
@@ -27,7 +28,7 @@ app.use('/Api/Candidate', CandidateRouter)
 app.use('/Api/Meeting', MeetingRouter)
 app.use('/Api/Message', MessageRouter)
 app.use('/Api/Notice', NoticeRouter)
-
+app.use('/Api/KPI', KPIROUTER)
 DB_CONNECTED()
 app.listen(PORT, () => {
   console.log('port is on')
