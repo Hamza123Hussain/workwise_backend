@@ -23,7 +23,7 @@ const KpiSchema = new mongoose.Schema(
           required: true,
         },
         PointsGained: { type: Number, default: 0, min: 0 },
-        TotalPoints: { type: Number, required: true, min: 0 },
+        TotalPoints: { type: Number, default: 0, required: true, min: 0 },
       },
     ],
     PointsGained: { type: Number, default: 0, min: 0 },
