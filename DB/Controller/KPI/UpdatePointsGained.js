@@ -4,7 +4,7 @@ export const UpdatingPointsGained = (Target, _id) => {
     // Check the priority and assign PointsGained accordingly
     if (element._id === _id) {
       element.PointsGained =
-        element.TotalPoints * (element.TargetValue / element.ValueAchieved)
+        element.TotalPoints * (element.ValueAchieved / element.TargetValue)
     }
 
     // Return the updated element for inclusion in the new array
