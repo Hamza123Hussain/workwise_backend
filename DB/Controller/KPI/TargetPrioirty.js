@@ -9,7 +9,7 @@ export const PointsGained_BasedOnPriority = (Target) => {
     } else {
       element.TotalPoints = 2.5 // Assign 2.5 points for low or other priorities
     }
-
+    element.PointsGained = 0
     // Return the updated element for inclusion in the new array
     return element
   })
