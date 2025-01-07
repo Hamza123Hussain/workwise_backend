@@ -12,8 +12,8 @@ export const KPIMaker = async (req, res) => {
       // If the user is not found, send a 404 error response
       return res.status(404).json({ message: 'User not found' })
     }
-    const Points = CalculatePoints(Targets)
     const UpdatedTarget = PointsGained_BasedOnPriority(Targets)
+    const Points = CalculatePoints(UpdatedTarget)
     // Step 2: Extract user details to include in the KPI document
     const UserName = existingUser.Name
     const UserEmail = existingUser.Email
@@ -22,7 +22,7 @@ export const KPIMaker = async (req, res) => {
       UserId, // Reference to the user in the database
       UserName, // Name of the user (for convenience)
       UserEmail, // Email of the user (for convenience)
-      Targets, // List of targets (array of objects with details like TargetName, TargetValue, etc.)
+      Targets: UpdatedTarget, // List of targets (array of objects with details like TargetName, TargetValue, etc.)
       PointsGained: Points.PointsGained, // Points gained by the user (default is 0 if not provided)
       TotalPoints: Points.TotalPoints, // Total points available for this KPI (default is 0 if not provided)
     })
@@ -31,7 +31,7 @@ export const KPIMaker = async (req, res) => {
     // Step 5: Respond with the created KPI and success message
     return res.status(201).json({
       message: 'KPI created successfully',
-      KPI: savedKPI,
+      // KPI: savedKPI,
       UpdatedTarget, // Return the newly created KPI document
     })
   } catch (error) {
