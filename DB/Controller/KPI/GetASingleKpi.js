@@ -8,7 +8,7 @@ export const GetAKPI = async (req, res) => {
     if (!ExisitngUser) {
       res.status(500).json('You are not authorized to use this api')
     }
-    const SingleKPI = await KPIModel.findById(UserID)
+    const SingleKPI = await KPIModel.findOne({ UserId: UserID })
     res.status(200).json(SingleKPI)
   } catch (error) {
     res
