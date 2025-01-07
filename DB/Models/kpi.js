@@ -6,26 +6,31 @@ const KpiSchema = new mongoose.Schema(
       type: String,
       ref: 'User',
       required: true,
+      unique: true,
     },
-    UserEmail: { type: String, required: true, lowercase: true }, // Ensure consistent email format
-    UserName: { type: String, required: true, trim: true }, // Trim extra spaces
+    UserEmail: { type: String, required: true, lowercase: true },
+    UserName: { type: String, required: true, trim: true },
     Targets: [
       {
-        TargetName: { type: String, required: true, trim: true }, // Ensure target name is provided
-        TargetValue: { type: Number, required: true, min: 0 }, // Add minimum validation
-        TargetAchieved: { type: Boolean, default: false }, // Default false if not provided
-        ValueAchieved: { type: Number, default: 0, min: 0 }, // Default value and minimum validation
-        AchievedOn: { type: Date }, // Add optional field to track when the target was achieved
-        Priority: { type: String },
-        PointsGained: { type: Number, default: 0, min: 0 }, // Default value and minimum validation
-        TotalPoints: { type: Number, required: true, min: 0 }, // Ensure a total point value is always provided
+        TargetName: { type: String, required: true, trim: true },
+        TargetValue: { type: Number, required: true, min: 0 },
+        TargetAchieved: { type: Boolean, default: false },
+        ValueAchieved: { type: Number, default: 0, min: 0 },
+        AchievedOn: { type: Date },
+        Priority: {
+          type: String,
+          enum: ['High', 'Medium', 'Low'],
+          required: true,
+        },
+        PointsGained: { type: Number, default: 0, min: 0 },
+        TotalPoints: { type: Number, required: true, min: 0 },
       },
     ],
-    PointsGained: { type: Number, default: 0, min: 0 }, // Default value and minimum validation
-    TotalPoints: { type: Number, required: true, min: 0 }, // Ensure a total point value is always provided
+    PointsGained: { type: Number, default: 0, min: 0 },
+    TotalPoints: { type: Number, required: true, min: 0 },
   },
   {
-    timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields
+    timestamps: true,
   }
 )
 
