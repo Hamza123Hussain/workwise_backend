@@ -1,5 +1,11 @@
 import mongoose from 'mongoose'
 
+// Helper function to get the last day of the current month
+const getEndOfMonth = () => {
+  const now = new Date()
+  return new Date(now.getFullYear(), now.getMonth() + 1, 0) // Last day of the current month
+}
+
 // Define the RoleTasks schema
 const RoleTasksSchema = new mongoose.Schema(
   {
@@ -10,15 +16,17 @@ const RoleTasksSchema = new mongoose.Schema(
     },
     Tasks: [
       {
-        TaskName: { type: String, required: true },
+        TaskName: { type: String, required: true }, // Name of the task
+        Description: { type: String, default: '' }, // Optional task description
         Priority: {
           type: String,
-          enum: ['Low', 'Medium', 'High'],
+          enum: ['Low', 'Medium', 'High'], // Priority levels
           required: true,
         },
-        Completed: { type: Boolean, default: false },
-        PointsGained: { type: Number, default: 0 },
-        TotalPoints: { type: Number, default: 0 },
+        Completed: { type: Boolean, default: false }, // Completion status
+        PointsGained: { type: Number, default: 0 }, // Points gained for completing the task
+        TotalPoints: { type: Number, default: 0 }, // Maximum points available for the task
+        DueDate: { type: Date, default: getEndOfMonth }, // Default due date (end of the month)
       },
     ],
     UsersAssigned: [
