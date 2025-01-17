@@ -2,7 +2,7 @@ import UserTask from '../../Models/employeetasks.js'
 import { User } from '../../Models/User.js'
 
 export const deleteTask = async (req, res) => {
-  const { UserId, taskId } = req.params // Extract UserId and taskId from the parameters
+  const { UserId, taskId } = req.query // Extract UserId and taskId from the parameters
 
   try {
     // Step 1: Find the user by UserId
