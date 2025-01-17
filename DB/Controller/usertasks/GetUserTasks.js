@@ -1,6 +1,6 @@
 import UserTask from '../../Models/employeetasks.js'
 
-export const getAllTasks = async (req, res) => {
+export const getUserTasks = async (req, res) => {
   const { UserId } = req.params
 
   try {

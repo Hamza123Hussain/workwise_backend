@@ -11,7 +11,7 @@ export const getAllTasks = async (req, res) => {
     // Check if the email matches the specified one
     if (existingUser && existingUser.Email === 'octtoppus1@gmail.com') {
       // Find all tasks for the user
-      const userTasks = await UserTask.findOne({ UserId })
+      const userTasks = await UserTask.find()
 
       if (!userTasks) {
         return res.status(404).json({ message: 'No tasks found for this user' })
