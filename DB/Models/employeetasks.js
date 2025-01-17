@@ -1,5 +1,9 @@
 import mongoose from 'mongoose'
-
+// Helper function to get the last day of the current month
+const getEndOfMonth = () => {
+  const now = new Date()
+  return new Date(now.getFullYear(), now.getMonth() + 1, 0) // Last day of the current month
+}
 const UserTaskSchema = new mongoose.Schema({
   UserId: {
     type: String,
@@ -28,7 +32,7 @@ const UserTaskSchema = new mongoose.Schema({
   },
   DueDate: {
     type: Date,
-    required: true,
+    default: getEndOfMonth,
   },
   UserName: {
     type: String, // Added field to store the user's name

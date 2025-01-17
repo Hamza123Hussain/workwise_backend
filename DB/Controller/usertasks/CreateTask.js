@@ -2,15 +2,8 @@ import UserTask from '../../Models/employeetasks.js'
 import { User } from '../../Models/User.js'
 
 export const createTask = async (req, res) => {
-  const {
-    UserId,
-    TaskName,
-    Priority,
-    PointsGained,
-    TotalPoints,
-    Description,
-    DueDate,
-  } = req.body
+  const { UserId, TaskName, Priority, PointsGained, TotalPoints, Description } =
+    req.body
 
   try {
     // Step 1: Check if the UserId exists in the User collection
@@ -27,7 +20,6 @@ export const createTask = async (req, res) => {
       PointsGained,
       TotalPoints,
       Description,
-      DueDate,
       UserName: existingUser.Name, // Adding UserName from the User model
       UserEmail: existingUser.Email, // Adding UserEmail from the User model
     })
