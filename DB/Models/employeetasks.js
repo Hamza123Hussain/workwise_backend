@@ -34,6 +34,10 @@ const UserTaskSchema = new mongoose.Schema({
     type: Date,
     default: getEndOfMonth,
   },
+  Completed: {
+    type: Boolean,
+    default: false,
+  },
   UserName: {
     type: String, // Added field to store the user's name
     required: true,
