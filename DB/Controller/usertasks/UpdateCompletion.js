@@ -1,9 +1,7 @@
 import UserTask from '../../Models/employeetasks.js'
-
 export const updateTask = async (req, res) => {
   const { UserId, TaskId } = req.params // Extract UserId and TaskId from request parameters
   const { Completed } = req.body
-
   try {
     // Find the task document and update it
     const updatedTask = await UserTask.findOneAndUpdate(
