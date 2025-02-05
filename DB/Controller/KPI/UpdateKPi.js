@@ -5,10 +5,10 @@ import { UpdatingPointsGained } from './UpdatePointsGained.js'
 
 export const UpdateKpi = async (req, res) => {
   try {
-    const { UserId, _id, TargetName } = req.body
+    const { UserId, TargetName } = req.body
 
     // Step 1: Validate Input
-    if (!UserId || !_id || !TargetName) {
+    if (!UserId || !TargetName) {
       return res.status(400).json({ message: 'Missing required fields' })
     }
 
@@ -19,7 +19,7 @@ export const UpdateKpi = async (req, res) => {
     }
 
     // Step 3: Fetch KPI Document
-    const UserKpi = await KPIModel.findById(_id)
+    const UserKpi = await KPIModel.findOne({ UserId })
     if (!UserKpi) {
       return res.status(404).json({ message: 'KPI not found' })
     }
@@ -30,7 +30,7 @@ export const UpdateKpi = async (req, res) => {
 
     // Step 5: Update KPI Document in Database
     const updatedKPI = await KPIModel.findByIdAndUpdate(
-      _id,
+      UserKpi._id,
       {
         UserId,
         UserName: existingUser.Name,
