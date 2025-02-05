@@ -1,8 +1,9 @@
-export const UpdatingPointsGained = (Target, _id) => {
+export const UpdatingPointsGained = (Target, Name) => {
   // Use map to iterate through the array and update each target
   const UpdatedTarget = Target.map((element) => {
     // Check the priority and assign PointsGained accordingly
-    if (element._id === _id) {
+    if (element.TargetName === Name) {
+      element.ValueAchieved++
       element.PointsGained =
         element.TotalPoints * (element.ValueAchieved / element.TargetValue)
     }
