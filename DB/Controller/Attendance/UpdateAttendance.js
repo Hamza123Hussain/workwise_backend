@@ -1,23 +1,11 @@
 import { AttendanceModel } from '../../Models/Attendance.js'
-import { Report } from '../../Models/Report.js'
 import { User } from '../../Models/User.js'
-import { getAddressFromCoordinates } from './CurrentLOCATION.js'
 export const UpdateAttendance = async (req, res) => {
-  const { Email, id, ExitTime, CheckInStatus, location } = req.body
-  const currentMonth = new Date().toLocaleString('default', { month: 'long' })
-  const TotalHours = 176
+  const { Email, id, ExitTime, CheckInStatus } = req.body
   try {
     // Check if the user exists by querying the User model with the email
     const ExistUser = await User.findOne({ Email })
     if (ExistUser) {
-      const address = await getAddressFromCoordinates(
-        location.latitude,
-        location.longitude
-      )
-      let ReportExist = await Report.findOne({
-        UserName: ExistUser.Name,
-        Month: currentMonth,
-      })
       // Fetch the attendance record by the provided ID
       const attendanceRecord = await AttendanceModel.findById(id)
       // If no record is found with the given ID, return a 404 error
@@ -33,28 +21,13 @@ export const UpdateAttendance = async (req, res) => {
       // Convert milliseconds to hours
       const hoursWorked = timeDifferenceMillis / (1000 * 60 * 60)
       // Update the attendance record with the new exit time and check-in status
-      ReportExist.TotalHours = TotalHours
-      ReportExist.HoursWorked += hoursWorked
-      ReportExist.AttendancePercentage = (
-        (ReportExist.HoursWorked / ReportExist.TotalHours) *
-        100
-      ).toFixed(2)
-      ReportExist.PerformancePercentage = (
-        ReportExist.AttendancePercentage * 0.2 +
-        ReportExist.TaskPercentage * 0.8
-      ).toFixed(2)
-      ReportExist.Salary =
-        (ExistUser.Salary * ReportExist.PerformancePercentage) / 100
-      await ReportExist.save()
+
       const updatedAttendance = await AttendanceModel.findByIdAndUpdate(
         id,
         {
           exit: ExitTime,
           CheckInStatus: CheckInStatus,
           Hours_Worked: hoursWorked,
-          location: address,
-          latitude: location.latitude,
-          longitude: location.longitude,
         },
         { new: true } // This returns the updated document
       )
