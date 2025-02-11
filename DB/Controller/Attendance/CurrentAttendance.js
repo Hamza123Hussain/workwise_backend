@@ -8,19 +8,19 @@ export const CurrentAttendance = async (req, res) => {
     const ExistUser = await User.findOne({ Email })
 
     if (ExistUser) {
-      // Fetch attendance records for the given user's email where checkInStatus is true
-      const allAttendance = await AttendanceModel.find({
+      // Fetch the latest attendance record for the user where CheckInStatus is true
+      const latestAttendance = await AttendanceModel.find({
         Email: ExistUser.Email,
-        CheckInStatus: true, // Add filter for checkInStatus
-      })
+      }) // Sort by currentDate in descending order
 
-      // If no records are found, return a 404 error
-      if (!allAttendance || allAttendance.length === 0) {
+      // If no record is found, return a 404 error
+      if (!latestAttendance) {
         return res.status(404).json({ message: 'No attendance records found' })
       }
 
-      // Respond with success message and the fetched attendance data
-      return res.status(200).json(allAttendance)
+      const LatestIndex = latestAttendance.length - 1
+      // Respond with the latest attendance data
+      return res.status(200).json(latestAttendance[LatestIndex])
     } else {
       // If user doesn't exist, respond with 404
       return res.status(404).json({ message: 'User not found' })
