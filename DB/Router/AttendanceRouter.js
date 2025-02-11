@@ -11,7 +11,7 @@ import { GetMonthlyHoursWorked } from '../Controller/Attendance/GetWorkedHours.j
 const AttendanceRouter = Router()
 
 AttendanceRouter.post('/NewAttendace', NewAttendance)
-AttendanceRouter.post('/UpdateAttendance', UpdateAttendance)
+AttendanceRouter.put('/UpdateAttendance', UpdateAttendance)
 AttendanceRouter.post('/Updatebreak', UpdateBreak)
 AttendanceRouter.get('/UserAttendance', UserAttendance)
 AttendanceRouter.get('/AllAttendance', AllUser)
