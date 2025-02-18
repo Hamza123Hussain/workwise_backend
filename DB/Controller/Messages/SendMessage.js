@@ -1,46 +1,65 @@
 import { database } from '../../../FireBaseConfig.js'
 import { ref, push, set, get } from 'firebase/database'
+import ChatModel from '../../Models/ChatModel.js'
+
 // Send message route
 export const SendMessage = async (req, res) => {
-  const { text, userId, recipientId, chatId } = req.body
-  // Sanitize chatId to ensure it's a valid Firebase path
-  const sanitizedChatId = chatId.replace(/@/g, '-at-').replace(/\./g, '-dot-')
-  // Log the incoming request data for debugging
-  console.log(req.body)
-  // Validate input data
-  if (!text || !userId || !recipientId || !sanitizedChatId) {
+  const { text, UserEmail, RecipentEmail, UserID, RecipentID } = req.body
+
+  // Validate required fields
+  if (!text || !UserID || !RecipentID) {
     return res.status(400).json({
-      error: 'Missing required fields: text, userId, recipientId, or chatId.',
+      error: 'Missing required fields: text, UserID, RecipentID, or text.',
     })
   }
+
   try {
-    // Reference to the chat messages in Firebase Realtime Database
-    const chatRef = ref(database, `chats/${sanitizedChatId}/messages`)
-    // Check if the chat already exists by querying for messages
-    const snapshot = await get(chatRef)
-    let messageRef
-    if (snapshot.exists()) {
-      // If chat exists, push a new message to the existing chat
-      messageRef = push(chatRef)
+    let chatID = ''
+
+    // Check if an existing chat exists between the two users
+    let existingChat = await ChatModel.findOne({
+      $or: [
+        { UserEmail, RecipentEmail },
+        { UserEmail: RecipentEmail, RecipentEmail: UserEmail },
+      ],
+    })
+
+    if (existingChat) {
+      chatID = existingChat.ChatID
     } else {
-      // If chat doesn't exist, create a new chat with the first message
-      messageRef = push(chatRef)
+      // Create a new chat record in MongoDB
+      const newChat = await ChatModel.create({
+        UserEmail,
+        RecipentEmail,
+        UserID,
+        RecipentID,
+        ChatID: `${UserID}-${RecipentID}`,
+      })
+      chatID = newChat.ChatID
     }
-    // Prepare message data
+
+    // Reference to the chat messages in Firebase Realtime Database
+    const chatRef = ref(database, `chats/${chatID}/messages`)
+
+    // Push a new message to Firebase
+    const messageRef = push(chatRef)
     const message = {
       text,
-      userId,
-      timestamp: new Date().getTime(),
-      recipientId,
+      UserID,
+      RecipentID,
+      timestamp: Date.now(), // Current timestamp
     }
-    // Push the message to the chat's 'messages' node
+
     await set(messageRef, message)
+
+    // Return success response
     res.status(201).json({
       message: 'Message sent successfully',
-      messageId: messageRef.key, // Return the Firebase message ID (key)
-      chatId: sanitizedChatId, // Return the sanitized chat ID
+      messageId: messageRef.key, // Firebase message ID
+      chatId: chatID, // The chat ID
     })
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    console.error('Error sending message:', error)
+    res.status(500).json({ error: 'Server error, please try again later.' })
   }
 }
