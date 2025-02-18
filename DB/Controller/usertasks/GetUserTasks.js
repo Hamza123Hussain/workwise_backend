@@ -1,15 +1,15 @@
 import UserTask from '../../Models/employeetasks.js'
 
 export const getUserTasks = async (req, res) => {
-  const { UserId } = req.params
+  const { UserId } = req.query
 
   try {
     // Find all tasks for the specified UserId
     const userTasks = await UserTask.find({ UserId })
 
-    // if (!userTasks || userTasks.length === 0) {
-    //   return res.status(404).json({ message: 'No tasks found for this user' })
-    // }
+    if (!userTasks || userTasks.length === 0) {
+      return res.status(404).json({ message: 'No tasks found for this user' })
+    }
 
     res.status(200).json({
       message: 'Tasks retrieved successfully',
