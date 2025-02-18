@@ -12,7 +12,7 @@ export const UserTaskRouter = Router()
 UserTaskRouter.post('/CreateNewTask', createTask)
 
 // Get all tasks for a user
-UserTaskRouter.get('/:UserId/GetUserTasks', getUserTasks)
+UserTaskRouter.get('/GetUserTasks', getUserTasks)
 
 // Get a single task by taskId and userId
 UserTaskRouter.get('/:UserId/SingleTask/:TaskId', getTask)
