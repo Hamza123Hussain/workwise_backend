@@ -1,21 +1,17 @@
 import { database } from '../../../FireBaseConfig.js'
 import { ref, push, set, get } from 'firebase/database'
 import ChatModel from '../../Models/ChatModel.js'
-
 // Send message route
 export const SendMessage = async (req, res) => {
   const { text, UserEmail, RecipentEmail, UserID, RecipentID } = req.body
-
   // Validate required fields
   if (!text || !UserID || !RecipentID) {
     return res.status(400).json({
       error: 'Missing required fields: text, UserID, RecipentID, or text.',
     })
   }
-
   try {
     let chatID = ''
-
     // Check if an existing chat exists between the two users
     let existingChat = await ChatModel.findOne({
       $or: [
@@ -23,7 +19,6 @@ export const SendMessage = async (req, res) => {
         { UserEmail: RecipentEmail, RecipentEmail: UserEmail },
       ],
     })
-
     if (existingChat) {
       chatID = existingChat.ChatID
     } else {
@@ -37,10 +32,8 @@ export const SendMessage = async (req, res) => {
       })
       chatID = newChat.ChatID
     }
-
     // Reference to the chat messages in Firebase Realtime Database
     const chatRef = ref(database, `chats/${chatID}/messages`)
-
     // Push a new message to Firebase
     const messageRef = push(chatRef)
     const message = {
@@ -49,9 +42,7 @@ export const SendMessage = async (req, res) => {
       RecipentID,
       timestamp: Date.now(), // Current timestamp
     }
-
     await set(messageRef, message)
-
     // Return success response
     res.status(201).json({
       message: 'Message sent successfully',
