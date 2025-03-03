@@ -8,7 +8,7 @@ export const getUserTasks = async (req, res) => {
     const userTasks = await UserTask.find({ UserId })
 
     if (!userTasks || userTasks.length === 0) {
-      return res.status(404).json({ message: 'No tasks found for this user' })
+      return res.status(200).json([])
     }
 
     res.status(200).json({
