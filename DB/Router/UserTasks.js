@@ -23,4 +23,4 @@ UserTaskRouter.put('/:UserId/UpdateTask/:TaskId', updateTask)
 // Delete a specific task by taskId and userId
 UserTaskRouter.delete('/DeleteTask', deleteTask)
 
-UserTaskRouter.get('/:UserId/AllTasks', getAllTasks)
+UserTaskRouter.get('/AllTasks', getAllTasks)
