@@ -2,7 +2,7 @@ import UserTask from '../../Models/employeetasks.js'
 import { User } from '../../Models/User.js'
 
 export const getAllTasks = async (req, res) => {
-  const { UserId } = req.params
+  const { UserId } = req.query
 
   try {
     // Find the user by UserId
