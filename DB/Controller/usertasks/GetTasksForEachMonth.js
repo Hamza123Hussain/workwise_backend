@@ -29,10 +29,7 @@ export const getUserTasksForEachMonth = async (req, res) => {
         },
       },
     ])
-    res.status(200).json({
-      message: 'Tasks grouped by month retrieved successfully',
-      data: monthlyTasks,
-    })
+    res.status(200).json(monthlyTasks)
   } catch (error) {
     console.error('Error fetching monthly tasks:', error)
     res.status(500).json({
