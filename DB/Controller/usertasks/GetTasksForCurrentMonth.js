@@ -23,7 +23,7 @@ export const getUserTasksForCurrentMonth = async (req, res) => {
     }).sort({ createdAt: -1 })
 
     res.status(200).json({
-      message: 'Tasks for the current month retrieved successfully',
+      count: userTasks.length,
       data: userTasks,
     })
   } catch (error) {
