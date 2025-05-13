@@ -1,9 +1,14 @@
 import { KPIModel } from '../../Models/kpi.js'
-import { User } from '../../Models/User.js'
-
 export const GetAllKpi = async (req, res) => {
-  const { UserID } = req.query
+  const { UserEmail } = req.query
   try {
+    if (
+      !UserEmail === 'gptprompts87@gmail.com' ||
+      !UserEmail === 'globalgrads.org@gmail.com' ||
+      !UserEmail === 'octtoppus1@gmail.com'
+    ) {
+      res.status(500).json('You are not authorized to use this api')
+    }
     const AllKpis = await KPIModel.find()
     res.status(200).json(AllKpis)
   } catch (error) {
