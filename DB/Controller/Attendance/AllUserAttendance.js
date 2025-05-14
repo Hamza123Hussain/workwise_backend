@@ -1,14 +1,13 @@
 import { AttendanceModel } from '../../Models/Attendance.js'
-import { User } from '../../Models/User.js'
-
 export const AllUser = async (req, res) => {
   const { Email } = req.query
-
   try {
     // Check if the user exists by querying the User model with the email
-    const ExistUser = await User.findOne({ Email })
-
-    if (ExistUser) {
+    if (
+      Email === 'gptprompts87@gmail.com' ||
+      Email === 'globalgrads.org@gmail.com' ||
+      Email === 'octtoppus1@gmail.com'
+    ) {
       // Fetch all attendance records for the given user's email
       const allAttendance = await AttendanceModel.find() // Assuming you store the email in "UserData"
 
@@ -16,7 +15,6 @@ export const AllUser = async (req, res) => {
       if (!allAttendance || allAttendance.length === 0) {
         return res.status(404).json({ message: 'No attendance records found' })
       }
-
       // Respond with success message and the fetched attendance data
       return res.status(200).json(allAttendance)
     } else {
