@@ -9,7 +9,11 @@ export const getAllTasks = async (req, res) => {
     const existingUser = await User.findById(UserId)
 
     // Check if the email matches the specified one
-    if (existingUser && existingUser.Email === 'octtoppus1@gmail.com') {
+    if (
+      (existingUser && existingUser.Email === 'octtoppus1@gmail.com') ||
+      UserId === 'globalgrads.org@gmail.com' ||
+      UserId === 'gptprompts87@gmail.com'
+    ) {
       // Find all tasks for the user
       const userTasks = await UserTask.find()
 
