@@ -50,7 +50,7 @@ export const getInvoicesByCompany = async (req, res) => {
         Message: 'Not Authorized To Acess This Route',
       })
     }
-    const invoices = await InvoiceModel.find({ CompanyName: companyName })
+    const invoices = await InvoiceModel.find({ companyName: companyName })
 
     return res.status(200).json(invoices)
   } catch (error) {
@@ -71,7 +71,7 @@ export const getInvoicesByYear = async (req, res) => {
         Message: 'Not Authorized To Acess This Route',
       })
     }
-    const invoices = await InvoiceModel.find({ FinancialYear: Year })
+    const invoices = await InvoiceModel.find({ financialYear: Year })
 
     return res.status(200).json(invoices)
   } catch (error) {
@@ -93,7 +93,7 @@ export const getInvoicesByStatus = async (req, res) => {
         Message: 'Not Authorized To Acess This Route',
       })
     }
-    const invoices = await InvoiceModel.find({ ApprovalStatus: Status })
+    const invoices = await InvoiceModel.find({ approvalStatus: Status })
 
     return res.status(200).json(invoices)
   } catch (error) {
