@@ -14,7 +14,7 @@ export const setInvoiceApproval = async (req, res) => {
     }
     const updatedInvoice = await InvoiceModel.findByIdAndUpdate(
       id,
-      { ApprovalStatus: status },
+      { approvalStatus: status },
       { new: true }
     )
 
