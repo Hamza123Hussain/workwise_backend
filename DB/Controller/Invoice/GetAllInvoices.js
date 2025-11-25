@@ -9,7 +9,9 @@ export const getAllInvoices = async (req, res) => {
         Message: 'Not Authorized To Acess This Route',
       })
     }
-    const invoices = await InvoiceModel.find().sort({ date: -1 }) // latest first
+    const invoices = await InvoiceModel.find().sort({
+      CreatedOn: -1,
+    }) // latest first
     return res.status(200).json(invoices)
   } catch (error) {
     console.error('Error fetching invoices:', error)
