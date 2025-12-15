@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { NewAttendance } from '../Controller/Attendance/NewAttendance.js'
-import { UpdateAttendance } from '../Controller/Attendance/UpdateAttendance.js'
+import { CheckIn } from '../Controller/Attendance/NewAttendance.js'
+import { CheckOut } from '../Controller/Attendance/UpdateAttendance.js'
 
 import { AllUser } from '../Controller/Attendance/AllUserAttendance.js'
 import { UserAttendance } from '../Controller/Attendance/UserAttendance.js'
@@ -10,8 +10,8 @@ import { GetMonthlyHoursWorked } from '../Controller/Attendance/GetWorkedHours.j
 
 const AttendanceRouter = Router()
 
-AttendanceRouter.post('/NewAttendace', NewAttendance)
-AttendanceRouter.put('/UpdateAttendance', UpdateAttendance)
+AttendanceRouter.post('/NewAttendace', CheckIn)
+AttendanceRouter.put('/UpdateAttendance', CheckOut)
 AttendanceRouter.post('/Updatebreak', UpdateBreak)
 AttendanceRouter.get('/UserAttendance', UserAttendance)
 AttendanceRouter.get('/AllAttendance', AllUser)

@@ -1,38 +1,30 @@
-// NewAttendance.js
-import { User } from '../../Models/User.js'
 import { AttendanceModel } from '../../Models/Attendance.js'
-import { v4 } from 'uuid'
-import { getAddressFromCoordinates } from './CurrentLOCATION.js'
-export const NewAttendance = async (req, res) => {
-  const { Email, EntryTime, CheckInStatus } = req.body
-  const randomid = v4()
+import { User } from '../../Models/User.js'
+
+export const CheckIn = async (req, res) => {
+  const { Email, User_ID, UserData } = req.body
   try {
-    // Check if the user exists by querying the User model with the email
-    const ExistUser = await User.findOne({ Email })
-    if (ExistUser) {
-      // Create a new attendance record
-      const NewAttendance = await AttendanceModel.create({
-        _id: randomid,
-        CheckInStatus: CheckInStatus,
-        User_ID: ExistUser.id,
-        UserData: ExistUser.Name, // Store user ID instead of just email for better referencing
-        Email: ExistUser.Email,
-        entry: EntryTime, // Assuming EntryTime is in the correct format
-        isAbsent: false, // Mark user as present
-        currentDate: new Date(), // Store the current date
-      })
-      // Respond with success message and the newly created attendance data
-      return res.status(201).json({
-        message: 'Attendance recorded successfully',
-        attendance: NewAttendance,
-      })
-    } else {
-      // If user doesn't exist, respond with 404
-      return res.status(404).json({ message: 'User not found' })
-    }
-  } catch (error) {
-    console.error('Error creating new attendance:', error)
-    // Catch any errors and return a 500 status code
-    return res.status(500).json({ error: 'Failed to record attendance' })
+    const user = await User.findOne({ Email })
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    const now = new Date()
+    const newAttendance = await AttendanceModel.create({
+      UserData,
+      User_ID,
+      Email,
+      entry: now,
+      currentDate: now,
+      CheckInStatus: true,
+      isAbsent: false,
+      onBreak: false,
+      Hours_Worked: 0,
+      Break_Time: 0,
+    })
+
+    return res
+      .status(201)
+      .json({ message: 'Checked in', attendance: newAttendance })
+  } catch (err) {
+    return res.status(500).json({ message: err.message })
   }
 }
