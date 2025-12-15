@@ -1,33 +1,48 @@
 import { AttendanceModel } from '../../Models/Attendance.js'
-
-export const CheckOut = async (req, res) => {
-  const { id } = req.body // attendanceId
-
+import { User } from '../../Models/User.js'
+export const UpdateAttendance = async (req, res) => {
+  const { Email, id, ExitTime, CheckInStatus } = req.body
   try {
-    const attendance = await AttendanceModel.findById(id)
-    if (!attendance)
-      return res.status(404).json({ message: 'Attendance not found' })
-    if (!attendance.CheckInStatus)
-      return res.status(400).json({ message: 'Already checked out' })
+    // Check if the user exists by querying the User model with the email
+    const ExistUser = await User.findOne({ Email })
+    if (ExistUser) {
+      // Fetch the attendance record by the provided ID
+      const attendanceRecord = await AttendanceModel.findById(id)
+      // If no record is found with the given ID, return a 404 error
+      if (!attendanceRecord) {
+        return res.status(404).json({ message: 'Attendance record not found' })
+      }
+      // Extract entry time from the attendance record
+      const entryTime = new Date(attendanceRecord.entry) // Assuming entry is stored as ISO date string
+      // Convert ExitTime from the request to a Date object
+      const exitTime = new Date(ExitTime)
+      // Calculate the time difference in milliseconds
+      const timeDifferenceMillis = exitTime - entryTime
+      // Convert milliseconds to hours
+      const hoursWorked = timeDifferenceMillis / (1000 * 60 * 60)
+      // Update the attendance record with the new exit time and check-in status
 
-    const exitTime = new Date()
-    const hoursWorked =
-      (exitTime.getTime() - new Date(attendance.entry).getTime()) /
-      (1000 * 60 * 60)
-
-    attendance.exit = exitTime
-    attendance.Hours_Worked = hoursWorked
-    attendance.CheckInStatus = false
-    await attendance.save()
-
-    return res.status(200).json({
-      message: 'Checked out',
-      attendance: {
-        exit: attendance.exit,
-        Hours_Worked: attendance.Hours_Worked,
-      },
-    })
-  } catch (err) {
-    return res.status(500).json({ message: err.message })
+      const updatedAttendance = await AttendanceModel.findByIdAndUpdate(
+        id,
+        {
+          exit: ExitTime,
+          CheckInStatus: CheckInStatus,
+          Hours_Worked: hoursWorked,
+        },
+        { new: true } // This returns the updated document
+      )
+      // Respond with success message and the updated attendance data
+      return res.status(200).json({
+        message: 'Attendance updated successfully',
+        attendance: updatedAttendance,
+        hoursWorked: hoursWorked, // Include the calculated hours worked in the response
+      })
+    } else {
+      // If user doesn't exist, respond with 404
+      return res.status(404).json({ message: 'User not found' })
+    }
+  } catch (error) {
+    // Catch any errors and return a 500 status code
+    return res.status(500).json({ message: error.message })
   }
 }
