@@ -2,34 +2,29 @@ import RoleTasks from '../../Models/RoleTasks.js'
 import { User } from '../../Models/User.js'
 
 export const DeleteARoleTask = async (req, res) => {
-  const { UserID, RoleTasksId } = req.query // Retrieve UserID and RoleTasksId from query parameters
+  const { UserID, RoleTasksId } = req.query
 
   try {
-    // Step 1: Check if the user exists (Authorization check)
     const existingUser = await User.findById(UserID)
-    if (!existingUser) {
+    if (
+      !existingUser ||
+      existingUser._id.toString() !== 'qdyyLorl9WR27GcAxkBbxHO4sWu1'
+    ) {
       return res
-        .status(401) // Unauthorized if the user is not found
-        .json({ message: 'You are not authorized to use this API' })
+        .status(401)
+        .json({ message: 'You are not authorized to delete roles' })
     }
 
-    // Step 2: Find and delete the RoleTasks document
-    const deletedRoleTask = await RoleTasks.findByIdAndDelete(RoleTasksId)
-    if (!deletedRoleTask) {
+    const deleted = await RoleTasks.findByIdAndDelete(RoleTasksId)
+    if (!deleted)
       return res.status(404).json({ message: 'Role task not found' })
-    }
 
-    // Step 3: Respond with the deleted document and success message
-    return res.status(200).json({
-      message: 'Role task deleted successfully',
-      deletedRoleTask, // Send the deleted RoleTask as part of the response
-    })
+    return res
+      .status(200)
+      .json({ message: 'Role task deleted', deletedRoleTask: deleted })
   } catch (error) {
-    // Step 4: Handle errors and respond with a generic message
-    console.error('Error deleting Role Task:', error)
-    return res.status(500).json({
-      message: 'An error occurred while deleting the Role Task',
-      error: error.message, // Include the specific error message for debugging
-    })
+    return res
+      .status(500)
+      .json({ message: 'Error deleting role task', error: error.message })
   }
 }
