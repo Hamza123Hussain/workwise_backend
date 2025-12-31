@@ -6,10 +6,7 @@ export const DeleteARoleTask = async (req, res) => {
 
   try {
     const existingUser = await User.findById(UserID)
-    if (
-      !existingUser ||
-      existingUser._id.toString() !== 'qdyyLorl9WR27GcAxkBbxHO4sWu1'
-    ) {
+    if (!existingUser) {
       return res
         .status(401)
         .json({ message: 'You are not authorized to delete roles' })
