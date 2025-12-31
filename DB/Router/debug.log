@@ -21,3 +21,5 @@
 [1231/133443.958:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: The system cannot find the file specified. (0x2)
 [1231/133907.234:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: The system cannot find the file specified. (0x2)
 [1231/133907.652:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: The system cannot find the file specified. (0x2)
+[1231/141304.606:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: The system cannot find the file specified. (0x2)
+[1231/141305.082:ERROR:third_party\crashpad\crashpad\util\win\registration_protocol_win.cc:108] CreateFile: The system cannot find the file specified. (0x2)
