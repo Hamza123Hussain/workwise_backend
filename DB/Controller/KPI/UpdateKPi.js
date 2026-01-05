@@ -1,46 +1,51 @@
 import { KPIModel } from '../../Models/kpi.js'
 import { User } from '../../Models/User.js'
 import { CalculatePoints } from './Points.js'
-import { PointsGained_BasedOnPriority } from './TargetPrioirty.js'
+import { UpdatingPointsGained } from './UpdatePointsGained.js'
 
-export const KPIUpdater = async (req, res) => {
-  const { UserId, Targets } = req.body
-
+export const UpdateKpi = async (req, res) => {
   try {
-    // 1. Check if the user exists
+    const { UserId, TargetName } = req.body
+
+    // Step 1: Validate Input
+    if (!UserId || !TargetName) {
+      return res.status(400).json({ message: 'Missing required fields' })
+    }
+
+    // Step 2: Verify User Existence
     const existingUser = await User.findById(UserId)
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    // 2. Find existing KPI for this user
-    const existingKPI = await KPIModel.findOne({ UserId })
-    if (!existingKPI) {
-      return res.status(404).json({ message: 'KPI not found for this user' })
+    // Step 3: Fetch KPI Document
+    const UserKpi = await KPIModel.findOne({ UserId })
+    if (!UserKpi) {
+      return res.status(404).json({ message: 'KPI not found' })
     }
 
-    // 3. Update targets with priority points
-    const UpdatedTarget = PointsGained_BasedOnPriority(Targets)
+    // Step 4: Process Targets and Calculate Points
+    const UpdatedTarget = UpdatingPointsGained(UserKpi.Targets, TargetName)
+    const { PointsGained, TotalPoints } = CalculatePoints(UpdatedTarget)
 
-    // 4. Recalculate points
-    const Points = CalculatePoints(UpdatedTarget)
+    // Step 5: Update KPI Document in Database
+    const updatedKPI = await KPIModel.findByIdAndUpdate(
+      UserKpi._id,
+      {
+        UserId,
+        UserName: existingUser.Name,
+        UserEmail: existingUser.Email,
+        Targets: UpdatedTarget,
+        PointsGained,
+        TotalPoints,
+      },
+      { new: true }
+    )
 
-    // 5. Update KPI fields
-    existingKPI.Targets = UpdatedTarget
-    existingKPI.PointsGained = Points.PointsGained
-    existingKPI.TotalPoints = Points.TotalPoints
-
-    // Optional: Update other fields if needed
-    // existingKPI.UpdatedAt = new Date()
-
-    // 6. Save changes
-    const updatedKPI = await existingKPI.save()
-
-    // 7. Return success
+    // Step 6: Respond with Success Message
     return res.status(200).json({
       message: 'KPI updated successfully',
-      KPI: updatedKPI,
-      UpdatedTarget,
+      updatedKPI,
     })
   } catch (error) {
     console.error('Error updating KPI:', error)
