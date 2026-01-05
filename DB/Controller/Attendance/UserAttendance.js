@@ -12,8 +12,8 @@ export const UserAttendance = async (req, res) => {
     }
 
     // Define the date range for 2025
-    const startOf2025 = new Date('2025-01-01T00:00:00Z')
-    const endOf2025 = new Date('2025-12-31T23:59:59Z')
+    const startOf2025 = new Date('2026-01-01T00:00:00Z')
+    const endOf2025 = new Date('2028-12-31T23:59:59Z')
 
     // Fetch attendance records for the given user's data within 2025
     const allAttendance = await AttendanceModel.find({
