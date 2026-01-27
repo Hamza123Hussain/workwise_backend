@@ -8,6 +8,9 @@ const KpiSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    HoursWorked: { type: Number, default: 0 },
+    Salary: { type: Number, default: 0 },
+    TotalSalary: { type: Number, default: 0 },
     UserEmail: { type: String, required: true, lowercase: true },
     UserName: { type: String, required: true, trim: true },
     Targets: [
@@ -31,7 +34,7 @@ const KpiSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 )
 
 export const KPIModel = mongoose.model('KPI', KpiSchema)
