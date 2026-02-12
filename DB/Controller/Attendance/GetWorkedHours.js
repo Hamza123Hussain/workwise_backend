@@ -1,50 +1,61 @@
 import { AttendanceModel } from '../../Models/Attendance.js'
+import { KPIModel } from '../../Models/kpi.js'
 
 export const GetMonthlyHoursWorked = async (req, res) => {
   const { UserId } = req.query
 
   try {
-    // Get the current date, month, and year
+    // 1. Define Date Range (Current Month)
     const currentDate = new Date()
     const startOfMonth = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth(),
-      1
-    ) // First day of the month
+      1,
+    )
     const endOfMonth = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() + 1,
-      0
-    ) // Last day of the month
+      0,
+    )
 
-    // Fetch attendance records for the user within the current month
+    // 2. Fetch Attendance Records
     const monthlyAttendance = await AttendanceModel.find({
       User_ID: UserId,
-      entry: { $gte: startOfMonth, $lte: endOfMonth }, // Filter by date range
+      entry: { $gte: startOfMonth, $lte: endOfMonth },
     })
 
-    if (!monthlyAttendance.length) {
+    // If no records, we still want to set KPI hours to 0 or return
+    const totalHoursWorked = monthlyAttendance.reduce((total, record) => {
+      return total + (record.Hours_Worked || 0)
+    }, 0)
+
+    // 3. Update the KPI Model with the calculated hours
+    // We use findOneAndUpdate so it works even if other KPI fields aren't yet initialized
+    const updatedKpi = await KPIModel.findOneAndUpdate(
+      { UserId: UserId },
+      { $set: { HoursWorked: totalHoursWorked } },
+      { new: true }, // returns the updated document
+    )
+
+    if (!updatedKpi) {
+      // Logic: If the KPI record doesn't exist yet, you might want to log it
+      // or simply proceed. Here we return 404 if the user doesn't have a KPI profile.
       return res.status(404).json({
-        message: 'No attendance records found for the current month',
-        HoursWorked: 0,
+        message: 'Hours calculated but KPI record for this user was not found.',
+        HoursWorked: totalHoursWorked,
       })
     }
 
-    // Sum up the hours worked for the current month
-    const totalHoursWorked = monthlyAttendance.reduce((total, record) => {
-      return total + (record.Hours_Worked || 0) // Add Hours_Worked, default to 0 if not set
-    }, 0)
-
-    // Respond with the total hours worked
+    // 4. Respond with the total hours worked and confirmation of KPI update
     return res.status(200).json({
-      message: 'Hours worked for the current month calculated successfully',
+      message: 'Monthly hours calculated and KPI updated successfully',
       HoursWorked: totalHoursWorked,
+      KpiStatus: 'Updated',
     })
   } catch (error) {
-    // Handle errors and respond with appropriate message
-    console.error('Error calculating monthly hours worked:', error)
+    console.error('Error in GetMonthlyHoursWorked:', error)
     return res.status(500).json({
-      message: 'An error occurred while calculating monthly hours worked',
+      message: 'An error occurred',
       error: error.message,
     })
   }
